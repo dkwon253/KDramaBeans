@@ -6,11 +6,19 @@ public class Items {
     private HashMap<String, String> itemDesc = new HashMap<>();
 
     public Items() {
-        getItemDesc().put("Money", "This is money");
-        getItemDesc().put("Evidence", "This is evidence of fabricated trail data");
+        getItemDesc().put("money", "This is money");
+        getItemDesc().put("evidence", "This is evidence of fabricated trail data");
     }
 
     public HashMap<String, String> getItemDesc() {
         return itemDesc;
+    }
+
+    public boolean contains(String item){
+        if(itemDesc.containsKey(item)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
