@@ -105,22 +105,21 @@ public class Story {
     }
 
 
-
     public static void main(String[] args) throws Exception {
         Story stor = new Story();
         Object obj = new JSONParser().parse(new FileReader("src/story.json"));
-
         JSONObject jo = (JSONObject) obj;
 
-        String name = (String) jo.get("name");
-        System.out.println(name);
+        Map intro = ((Map)jo.get("intro"));
+        System.out.println(intro.get("description"));
+        System.out.println(intro.get("items").toString());
 
-        Map languages = ((Map)jo.get("languages"));
-        Iterator<Map.Entry> itr1 = languages.entrySet().iterator();
-        while(itr1.hasNext()) {
-            Map.Entry pair = itr1.next();
-            System.out.println(pair.getKey() + " : " + pair.getValue());
-        }
+
+//        Iterator<Map.Entry> itr1 = languages.entrySet().iterator();
+//        while(itr1.hasNext()) {
+//            Map.Entry pair = itr1.next();
+//            System.out.println(pair.getKey() + " : " + pair.getValue());
+//        }
 
         //System.out.println(stor.storyLine("Scene2"));
         //System.out.println("Enter your option: ");
@@ -129,7 +128,6 @@ public class Story {
     }
 
     private void printMap(HashMap<String, Object> map) {
-
         String input = scanner.nextLine();
         System.out.println(map.get(input));
         //map.forEach();

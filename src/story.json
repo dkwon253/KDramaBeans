@@ -1,8 +1,88 @@
 {
-  "name": "David",
-  "items": "Money",
-  "languages": {
-    "korean": "south korea",
-    "english": "UK"
+  "intro": {
+    "description": "This story is about a man seeking revenge for the murder of his father. Your name is Park Ji Woo and you have become a successful entrepreneur in the states. You come back to South Korea under the alias of Daniel Park and your goal is to destroy X Company.",
+    "option": {},
+    "items": [
+      "evidence",
+      "money"
+    ],
+    "choices": ["scene1"]
+  },
+
+  "scene1": {
+    "description": "Park Ji Woo's father, Park Ji Sung is driving his boss, Lee Jin Wook to work. He is suddenly asked to pull over as his boss receives an urgent phone call. His boss looks frantic.",
+    "option": {
+      "1": "Eavesdrop on the conversation.",
+      "2": "Play Candy Crush on your phone while waiting for him to finish."
+    },
+    "items": [
+      "evidence",
+      "money"
+    ],
+    "choices": ["scene2"]
+  },
+
+  "scene2": {
+    "description": "One day, Park Ji Sung left work to pick you up from school. Another car crashed into your dad's car, right in the front of the school gate. You come out of school only to find your dad is dead, and no other vehicle in sight. The only thing left besides your dad's body is his favorite watch and a picture of you and him.Today, you became an orphan, you have no other family members.",
+    "option": {
+      "1": "Examine your dad's favorite watch",
+      "2": "Continue to mourn for your father's death"
+    },
+    "items": [
+      "evidence",
+      "money"
+    ]
+  },
+
+  "scene3": {
+    "description": "You have been adopted by an American family and moved to New York. You attend and graduate at the top of your class from Yale University. You go on to become a successful entrepreneur and are famous all throughout the world. Little do people know, your only goal in life is to get back at the person who murdered your father.",
+    "option": {
+      "1": "Hire a private investigator to find more information about your father's case",
+      "2": "Fly first class to Tokyo to watch the 2021 Olympics"
+    },
+    "items": [
+      "evidence",
+      "money"
+    ],
+    "choices": ["scene2"]
+  },
+
+  "scene4": {
+    "description": "You have done your research about X Company, and gathered leads on how to take the company down. You fly to Korea with the alias of Daniel Park.",
+    "option": {
+      "1": "Meet the CEO's daughter",
+      "2": "Meet with the CEO to talk about a possible investment in X Company",
+      "3": "Talk to X Company's board members to inquire more about their shares"
+    },
+    "items": [
+      "evidence",
+      "money"
+    ],
+    "choices": ["scene2"]
+  },
+
+  "scene5": {
+    "description": "You meet the daughter, Lee Ji Eun. She is caught off guard by your elegance and immediately starts a conversation with you. You show you are not interested.",
+    "option": {
+      "1": "Continue to ignore her",
+      "2": "Inquire more about RDX-90"
+    },
+    "items": [
+      "evidence",
+      "money"
+    ],
+    "choices": ["scene2"]
+  },
+
+  "scene6": {
+    "description": "You meet the CEO of X Company, and told him your company would like to help promote the sales of RDX-90 in the United States.",
+    "option": {
+      "1": "Request more research documentation about RDX-90",
+      "2": "Talk about Korean politics"
+    },
+    "items": [
+      "evidence",
+      "money"
+    ]
   }
 }
