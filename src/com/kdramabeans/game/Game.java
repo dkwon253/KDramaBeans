@@ -55,7 +55,7 @@ public class Game {
             default:
                 System.out.println("Not a command");
         }
-
+// will use later
 //        if (items.contains(input[1].toLowerCase())) {
 //            System.out.println("yay");
 //        } else {
