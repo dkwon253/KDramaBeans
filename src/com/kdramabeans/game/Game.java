@@ -49,7 +49,7 @@ public class Game {
                     break;
                 case "CHOOSE":
                     System.out.println("CHOOSE " + input[1]);
-                    story.setScene();
+                    story.nextScene();
                     break;
                 default:
                     System.out.println("Not a command");
