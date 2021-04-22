@@ -7,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 
 public class Story {
 
+    //some comments
     private JSONObject data;
     private JSONObject scene;
     private String option = "1";
