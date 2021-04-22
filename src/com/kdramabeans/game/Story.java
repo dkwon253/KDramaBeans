@@ -19,20 +19,20 @@ public class Story {
         return (JSONObject) jsonObj.get(scene);
     }
 
-    public String getDescription(JSONObject jsonObj) {
-        return (String) jsonObj.get("description");
+    public String getDescription(JSONObject scene) {
+        return (String) scene.get("description");
     }
 
-    public JSONObject getOptions(JSONObject jsonObj) {
-        return (JSONObject) jsonObj.get("option");
+    public JSONObject getOptions(JSONObject scene) {
+        return (JSONObject) scene.get("option");
     }
 
-    public JSONArray getItems(JSONObject jsonObj) {
-        return (JSONArray) jsonObj.get("items");
+    public JSONArray getItems(JSONObject scene) {
+        return (JSONArray) scene.get("items");
     }
 
-    public JSONArray getChoices(JSONObject jsonObj) {
-        return (JSONArray) jsonObj.get("choices");
+    public JSONArray getChoices(JSONObject scene) {
+        return (JSONArray) scene.get("choices");
     }
 
     // need to throw exception for the filereader
