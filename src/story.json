@@ -1,7 +1,14 @@
 {
   "intro": {
     "description": "This story is about a man seeking revenge for the murder of his father. Your name is Park Ji Woo and you have become a successful entrepreneur in the states. You come back to South Korea under the alias of Daniel Park and your goal is to destroy X Company.",
-    "ending": false
+    "ending": false,
+    "option": {
+      "1": {
+        "description": "Type in [NEXT] to go to next scene",
+        "nextScene": "scene1",
+        "items": null
+      }
+    }
   },
   "scene1": {
     "description": "Park Ji Woo's father, Park Ji Sung is driving his boss, Lee Jin Wook to work. He is suddenly asked to pull over as his boss receives an urgent phone call. His boss looks frantic.",
@@ -10,7 +17,7 @@
       "1": {
         "description": "Eavesdrop on the conversation.",
         "nextScene": "scene2",
-        "items": "voice recorder",
+        "items": "voice recorder"
       },
       "2": {
         "description": "Play Candy Crush on your phone while waiting for him to finish.",
