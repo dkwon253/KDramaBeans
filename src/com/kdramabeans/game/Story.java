@@ -1,6 +1,7 @@
 package com.kdramabeans.game;
 
 import java.io.FileReader;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,8 +24,16 @@ public class Story {
         JSONObject options = getOptions();
         JSONObject newOption = (JSONObject) options.get(option);
         String nextScene = (String) newOption.get("nextScene");
-        this.scene = (JSONObject) data.get(nextScene);
+        JSONObject currentScene = (JSONObject) data.get(nextScene);
+        if((boolean) currentScene.get("ending")) {
+            String msg = (String) currentScene.get("description");
+            System.out.println(msg);
+            System.exit(0);
+        }else{
+            this.scene = currentScene;
+        }
     }
+
 
     public void setOption(String option) {
         this.option = option;
@@ -54,8 +63,10 @@ public class Story {
         return (String) newOption.get("itemDescription");
     }
 
-    public void printStory(){
+    public void printStory() {
         System.out.println(getDescription());
-        System.out.println("Here are your options: " + getOptions().toString());
+        if (!getEnding()) {
+            System.out.println("Here are your options: " + getOptions().toString());
+        }
     }
 }
