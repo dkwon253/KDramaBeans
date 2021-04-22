@@ -35,6 +35,7 @@ public class Story {
         return (JSONArray) jsonObj.get("choices");
     }
 
+    // need to throw exception for the filereader
     public static void main(String[] args) throws Exception {
         // just to test that all the functions work
         Story story = new Story();
