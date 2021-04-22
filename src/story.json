@@ -1,88 +1,169 @@
 {
   "intro": {
     "description": "This story is about a man seeking revenge for the murder of his father. Your name is Park Ji Woo and you have become a successful entrepreneur in the states. You come back to South Korea under the alias of Daniel Park and your goal is to destroy X Company.",
-    "option": {},
-    "items": [
-      "evidence",
-      "money"
-    ],
-    "choices": ["scene1"]
+    "ending": false,
+    "option": {
+      "1": {
+        "description": "Type in [NEXT] to go to next scene",
+        "nextScene": "scene1",
+        "items": null
+      }
+    }
   },
-
   "scene1": {
     "description": "Park Ji Woo's father, Park Ji Sung is driving his boss, Lee Jin Wook to work. He is suddenly asked to pull over as his boss receives an urgent phone call. His boss looks frantic.",
+    "ending": false,
     "option": {
-      "1": "Eavesdrop on the conversation.",
-      "2": "Play Candy Crush on your phone while waiting for him to finish."
-    },
-    "items": [
-      "evidence",
-      "money"
-    ],
-    "choices": ["scene2"]
+      "1": {
+        "description": "Eavesdrop on the conversation.",
+        "nextScene": "scene2",
+        "items": "voice recorder"
+      },
+      "2": {
+        "description": "Play Candy Crush on your phone while waiting for him to finish.",
+        "nextScene": "candyCrush"
+      }
+    }
   },
-
   "scene2": {
-    "description": "One day, Park Ji Sung left work to pick you up from school. Another car crashed into your dad's car, right in the front of the school gate. You come out of school only to find your dad is dead, and no other vehicle in sight. The only thing left besides your dad's body is his favorite watch and a picture of you and him.Today, you became an orphan, you have no other family members.",
+    "description": "The next day, your father leaves work to pick you up from school. Another car crashed into your dad's car, right in the front of the school gate. You come out of school only to find your dad is dead, and no other vehicle in sight. The only thing left besides your dad's body is his favorite watch and a picture of you two. Today, you became an orphan, you have no other family members.",
+    "ending": false,
     "option": {
-      "1": "Examine your dad's favorite watch",
-      "2": "Continue to mourn for your father's death"
-    },
-    "items": [
-      "evidence",
-      "money"
-    ]
+      "1": {
+        "description": "Examine your dad's favorite watch",
+        "nextScene": "scene3",
+        "items": "watch",
+        "itemDescription": "You find an odd microchip taped on the backside of the watch"
+      },
+      "2": {
+        "description": "Continue to mourn for your father's death",
+        "nextScene": "mournScene"
+      }
+    }
   },
-
   "scene3": {
     "description": "You have been adopted by an American family and moved to New York. You attend and graduate at the top of your class from Yale University. You go on to become a successful entrepreneur and are famous all throughout the world. Little do people know, your only goal in life is to get back at the person who murdered your father.",
+    "ending": false,
     "option": {
-      "1": "Hire a private investigator to find more information about your father's case",
-      "2": "Fly first class to Tokyo to watch the 2021 Olympics"
-    },
-    "items": [
-      "evidence",
-      "money"
-    ],
-    "choices": ["scene2"]
+      "1": {
+        "description": "Hire a private investigator to find more information about your father's case",
+        "nextScene": "scene4",
+        "item": "evidence",
+        "itemDescription": "The private investigator concludes that the top suspect for your father's murder is Company X's CEO."
+      },
+      "2": {
+        "description": "Fly first class to Tokyo to watch the 2021 Olympics",
+        "nextScene": "olympicScene"
+      }
+    }
   },
-
   "scene4": {
     "description": "You have done your research about X Company, and gathered leads on how to take the company down. You fly to Korea with the alias of Daniel Park.",
+    "ending": false,
     "option": {
-      "1": "Meet the CEO's daughter",
-      "2": "Meet with the CEO to talk about a possible investment in X Company",
-      "3": "Talk to X Company's board members to inquire more about their shares"
-    },
-    "items": [
-      "evidence",
-      "money"
-    ],
-    "choices": ["scene2"]
+      "1": {
+        "description": "Meet the CEO's daughter",
+        "nextScene": "scene5"
+      },
+      "2": {
+        "description": "Meet with the CEO to talk about a possible investment in Company X",
+        "nextScene": "scene6"
+      },
+      "3": {
+        "description": "Talk to Company X's board members to inquire more about their shares",
+        "nextScene": "scene7"
+      }
+    }
   },
-
   "scene5": {
-    "description": "You meet the daughter, Lee Ji Eun. She is caught off guard by your elegance and immediately starts a conversation with you. You show you are not interested.",
+    "description": "You meet the daughter, Lee Ji Eun. She is caught off guard by your elegance and immediately starts a conversation with you.",
+    "ending": false,
     "option": {
-      "1": "Continue to ignore her",
-      "2": "Inquire more about RDX-90"
-    },
-    "items": [
-      "evidence",
-      "money"
-    ],
-    "choices": ["scene2"]
+      "1": {
+        "description": "Have a long conversation over a cup of coffee and get to know each other more",
+        "nextScene": "scene8"
+      },
+      "2": {
+        "description": "Inquire more about RDX-90. She seems to trust you and spills the beans",
+        "nextScene": "scene8",
+        "item": "clinical evidence",
+        "itemDescription": "You have a recording of Company X plagiarizing the clinical trials to promote the upcoming launch of RDX-90"
+      }
+    }
   },
-
   "scene6": {
-    "description": "You meet the CEO of X Company, and told him your company would like to help promote the sales of RDX-90 in the United States.",
+    "description": "You meet the CEO of Company X, and inform him your company would like to help promote the sales of RDX-90 in the United States.",
+    "ending": false,
     "option": {
-      "1": "Request more research documentation about RDX-90",
-      "2": "Talk about Korean politics"
+      "1": {
+        "description": "Request more research documents about RDX-90",
+        "nextScene": "ceoScene"
+      },
+      "2": {
+        "description": "Talk about Korean politics with the CEO",
+        "nextScene": "scene8",
+        "item": "voice recording",
+        "itemDescription": "The CEO flaunts that most of the government is under his control since he has paid off the politicians"
+      }
+    }
+  },
+  "scene7": {
+    "description": "You meet a board member of Company X, and he was quite happy about RDX-90 possibly going on sale in the United States",
+    "ending": false,
+    "option": {
+      "1": {
+        "description": "Talk about safety issue of RDX-90",
+        "nextScene": "scene8",
+        "item": "company shares",
+        "itemDescription": "The board member expresses concerns of the RDX-90 launch after your conversation. You offer to buy some of the company shares from him to mitigate the loss. He agrees to give you half of his shares."
+      },
+      "2": {
+        "description": "Show interest in buying some of Company X's shares",
+        "nextScene": "scene3",
+        "itemDescription": "He offers you an outrageous price of selling his shares. You reject his offer."
+      }
+    }
+  },
+  "scene8": {
+    "description": "You've collected enough information about the safety concerns of RDX-90 along with the plagiarized clinical trials. You meet an American reporter in a cafe shop to transfer all the information you have on Company X. As soon as you are about to give the report, Lee Ji Eun, who has been tailing you, interrupts your conversation.",
+    "ending": false,
+    "option": {
+      "1": {
+        "description": "You hesitate to hand the information to the reporter, and start talking with Lee Ji Eun",
+        "nextScene": "result2"
+      },
+      "2": {
+        "description": "Give the information to the reporter, and proceed as planned.",
+        "nextScene": "result1"
+      }
     },
     "items": [
       "evidence",
       "money"
     ]
+  },
+  "result1": {
+    "description": "You take down the company, you reveal your identity to Chairman Lee who is shocked that you have come this far. He asks for forgiveness and for you to spare his life. He is sentenced to 15 years in jail for corruption and murder for your father's death.",
+    "ending": true
+  },
+  "result2": {
+    "description": "You develop feelings for Lee Ji Eun and your relationship takes off. You reveal your identity to her and she accepts you for who you are and what you have been through. You still reveal the corrupt deeds of Company X and the Chairman goes to jail. You take over as the CEO and reform the company and it becomes a global brand after the successful promotion of RDX-90.",
+    "ending": true
+  },
+  "candyCrush": {
+    "description": "You ran out of time and couldn't beat level 100. You open the window a little bit to take out your frustration. The chairman being frantic feels like you were eavesdropping and gets suspicious.",
+    "ending": true
+  },
+  "mournScene": {
+    "description": "Your perform your father's funeral. Few guests arrive, but nobody from Company X gives their condolences.",
+    "ending": true
+  },
+  "olympicScene": {
+    "description": "Korea takes 1st place in all competitions! All the males are exempt from their military service.",
+    "ending": true
+  },
+  "ceoScene": {
+    "description": "You notice a lot of the information presented doesn't make any sense. You see that this document can be a liability to the company and its RDX-90 product promotion.",
+    "ending": true
   }
 }
