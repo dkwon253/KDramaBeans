@@ -1,6 +1,8 @@
 package com.kdramabeans.game;
 
 import java.io.FileReader;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -8,7 +10,6 @@ import org.json.simple.parser.JSONParser;
 
 public class Story {
 
-    //some more comments
     private JSONObject data;
     private JSONObject scene;
     private String option = "1";
@@ -33,7 +34,6 @@ public class Story {
             this.scene = currentScene;
         }
     }
-
 
     public void setOption(String option) {
         this.option = option;
@@ -64,9 +64,18 @@ public class Story {
     }
 
     public void printStory() {
+        System.out.println("These are your commands:\n" +
+                        "EXAMINE + USE + CHOOSE\n");
         System.out.println(getDescription());
         if (!getEnding()) {
-            System.out.println("Here are your options: " + getOptions().toString());
+            Map options = ((Map)scene.get("option"));
+            Iterator<Map.Entry> itr1 = options.entrySet().iterator();
+            System.out.println("\nHere are your options: ");
+            while (itr1.hasNext()) {
+                Map.Entry pair = itr1.next();
+                JSONObject msg = (JSONObject) pair.getValue();
+                System.out.println(pair.getKey() + " : " + msg.get("description"));
+            }
         }
     }
 }
