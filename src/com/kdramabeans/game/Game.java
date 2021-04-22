@@ -3,21 +3,29 @@ package com.kdramabeans.game;
 import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.simple.JSONObject;
 
 public class Game {
     Scanner scanner = new Scanner(System.in);
     Items items = new Items();
     Player player = new Player();
+    Story story = new Story();
     boolean enteredQuit = false;
 
-    public void start(){
+    public Game() throws Exception{
+
+    }
+
+    public void start() throws Exception {
+
         while(!enteredQuit){
-            promptUser("Enter verb and item");
+            promptUser();
+
         }
     }
 
-    public void promptUser(String message){
-        System.out.println(message);
+    public void promptUser(){
+        story.printStory();
         String[] input = StringUtils.split(scanner.nextLine(), " ", 2);
 
         if(input[0].equalsIgnoreCase("quit")){
@@ -31,19 +39,27 @@ public class Game {
     }
 
     private void executeCommand(String[] input) {
-        if(items.contains(input[1].toLowerCase())){
-            switch (input[0].toUpperCase()){
+        if (items.contains(input[1].toLowerCase())) {
+            switch (input[0].toUpperCase()) {
                 case "EXAMINE":
                     System.out.println("EXAMINE " + input[1]);
                     break;
                 case "USE":
                     System.out.println("USE " + input[1]);
                     break;
+                case "CHOOSE":
+                    System.out.println("CHOOSE " + input[1]);
+                    story.setScene();
+                    break;
                 default:
                     System.out.println("Not a command");
             }
-        }else {
-            System.out.println("Item: " + input[1] + " is not there!");
+
+            if (items.contains(input[1].toLowerCase())) {
+                System.out.println("yay");
+            } else {
+                System.out.println("Item: " + input[1] + " is not there!");
+            }
         }
     }
 
