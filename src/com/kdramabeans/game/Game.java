@@ -43,6 +43,9 @@ public class Game {
             case "USE":
                 System.out.println("USE " + input[1]);
                 break;
+            case "GRAB":
+                System.out.println("GRAB " + input[1]);
+                break;
             case "CHOOSE":
                 //System.out.println("CHOOSE " + input[1]);
                 if(story.getOptions().containsKey(input[1])) {

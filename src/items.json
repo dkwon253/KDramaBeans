@@ -1,0 +1,136 @@
+{
+  "passport": {
+    "description": "This is the key for you to get your revenge",
+    "option": {
+      "description": "Fly to Korea",
+      "nextScene": "scene1"
+    }
+  },
+  "wallet": {
+    "description": "You might need some money",
+    "option": {}
+  },
+  "voice recorder": {
+    "description": "Your old-school voice recorder. There's still some room left to record something...",
+    "option": {
+      "description": "Eavesdrop on the conversation.",
+      "nextScene": "scene2"
+    }
+  },
+  "phone": {
+    "description": "There's only Candy Crush on this phone.",
+    "option": {
+      "description": "Play Candy Crush on your phone while waiting for him to finish.",
+      "nextScene": "candyCrush"
+    }
+  },
+  "watch": {
+    "description": "You find an odd microchip taped on the backside of the watch",
+    "option": {
+        "description": "Examine your dad's favorite watch",
+        "nextScene": "scene3"
+    }
+  },
+  "picture": {
+    "description": "It's a portrait of you and your father",
+    "option": {
+      "description": "Continue to mourn for your father's death",
+      "nextScene": "mournScene"
+    }
+  },
+  "ticket": {
+    "description": "It's the opening ceremony ticket to the 2021 Tokyo Olympic Games!",
+    "option": {
+      "description": "Fly first class to Tokyo to watch the 2021 Olympics",
+      "nextScene": "olympicScene"
+    }
+  },
+  "business card": {
+    "description": "It's for a Private Investigator",
+    "option": {
+      "description": "Hire a private investigator to find more information about your father's case",
+      "nextScene": "scene4"
+    }
+  },
+  "coffee": {
+    "description": "Your cup is low. Maybe go grab some more?",
+    "option": {
+      "description": "Meet the CEO's daughter for coffee",
+      "nextScene": "scene5"
+    }
+  },
+  "tea": {
+    "description": "Your cup is low. Maybe go grab some more?",
+    "option": {
+      "description": "Meet with the CEO to talk about a possible investment in Company X",
+      "nextScene": "scene6"
+    }
+  },
+  "beer": {
+    "description": "Your cup is low. Maybe go grab some more?",
+    "option": {
+      "description": "Talk to Company X's board members to inquire more about their shares",
+      "nextScene": "scene7"
+    }
+  },
+  "window seat": {
+    "description": "The weather is nice today.",
+    "option": {
+      "description": "Have a long conversation over a cup of coffee and get to know each other more",
+      "nextScene": "scene8"
+    }
+  },
+  "the booth": {
+    "description": "Nice and cozy here.",
+    "option": {
+      "description": "Inquire more about RDX-90. She seems to trust you and spills the beans",
+      "nextScene": "scene8"
+    }
+  },
+  "green tea": {
+    "description": "Basic.",
+    "option": {
+      "description": "Request more research documents about RDX-90",
+      "nextScene": "ceoScene"
+    }
+  },
+  "solomon's tea": {
+    "description": "Local's favorite tea.",
+    "option": {
+      "description": "Talk about Korean politics with the CEO",
+      "nextScene": "scene8"
+    }
+  },
+  "ipa": {
+    "description": "Dark and thick.",
+    "option": {
+      "description": "Talk about safety issue of RDX-90",
+      "nextScene": "scene8"
+    }
+  },
+  "truly": {
+    "description": "Basic.",
+    "option": {
+      "description": "Show interest in buying some of Company X's shares",
+      "nextScene": "scene3"
+    }
+  },
+  "kimchi": {
+    "description": "The heart of South Korean cuisine.",
+    "option": {
+      "description": "You hesitate to hand the information to the reporter, and start talking with Lee Ji Eun",
+      "nextScene": "result2"
+    }
+  },
+  "soju": {
+    "description": "The soul of South Korean cuisine",
+    "option": {
+      "description": "Give the information to the reporter, and proceed as planned.",
+      "nextScene": "result1"
+    }
+  },
+  "evidence": {
+    "description": "The private investigator concludes that the top suspect for your father's murder is Company X's CEO."
+  }
+
+}
