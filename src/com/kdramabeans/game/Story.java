@@ -1,10 +1,10 @@
 package com.kdramabeans.game;
 
 import java.io.FileReader;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -12,67 +12,102 @@ public class Story {
 
     private JSONObject data;
     private JSONObject scene;
-    private String option = "1";
+    private Map<String, Map> options = new HashMap<>();
+    private String currentOption;
+    private List<Item> sceneItems = new ArrayList<Item>();
 
     public Story() throws Exception {
         Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/story.json"));
         JSONObject jsonObj = (JSONObject) obj;
         this.data = jsonObj;
         this.scene = (JSONObject) jsonObj.get("intro");
+        setSceneItems();
     }
 
     public void nextScene() {
-        JSONObject options = getOptions();
-        JSONObject newOption = (JSONObject) options.get(option);
+        setScene();
+        resetOptions();
+        setSceneItems();
+    }
+
+    public void setScene(){
+        JSONObject newOption = (JSONObject) options.get(currentOption);
         String nextScene = (String) newOption.get("nextScene");
         JSONObject currentScene = (JSONObject) data.get(nextScene);
-        if((boolean) currentScene.get("ending")) {
+        if ((boolean) currentScene.get("ending")) {
             String msg = (String) currentScene.get("description");
             System.out.println(msg);
             System.exit(0);
-        }else{
+        } else {
             this.scene = currentScene;
         }
     }
 
-    public void setOption(String option) {
-        this.option = option;
+    public Map<String, Map> getOptions() {
+        return options;
+    }
+
+    public void setOptions(String item){
+        String key = Integer.toString(options.size() + 1);
+        Item itemObj = sceneItems.stream().filter(obj -> obj.getName().equalsIgnoreCase(item)).findAny().orElse(null);
+        if(itemObj.getOption().get("description") != null){
+            options.put(key, itemObj.getOption());
+        }
+        sceneItems.remove(itemObj);
+    }
+
+    public void resetOptions(){
+        options.clear();
+    }
+
+    public void setCurrentOption(String option){
+        this.currentOption = option;
     }
 
     public String getDescription() {
         return (String) scene.get("description");
     }
 
-    public JSONObject getOptions() {
-        return (JSONObject) scene.get("option");
-    }
-
     public boolean getEnding() {
         return (boolean) scene.get("ending");
     }
 
-    public String getItems() {
-        JSONObject options = getOptions();
-        JSONObject newOption = (JSONObject) options.get(option);
-        return (String) newOption.get("items");
+    private void setSceneItems() {
+        List items = (List) scene.get("items");
+        items.forEach(item -> {
+            try {
+                sceneItems.add(new Item(item.toString()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    public String getItemDescription() {
-        JSONObject options = getOptions();
-        JSONObject newOption = (JSONObject) options.get(option);
-        return (String) newOption.get("itemDescription");
+    public boolean hasItem(String item){
+        List items = (List) scene.get("items");
+        return items.contains(item);
+    }
+
+    private void printItems(){
+        sceneItems.forEach(item-> System.out.println(item.getName()));
     }
 
     public void printStory() {
         System.out.println("These are your commands:\n" +
-                        "EXAMINE + USE + CHOOSE\n");
+                "EXAMINE + USE + GRAB + CHOOSE\n");
         System.out.println(getDescription());
         if (!getEnding()) {
-            Map options = ((Map)scene.get("option"));
-            Iterator<Map.Entry> itr1 = options.entrySet().iterator();
+            System.out.println("Here are the items you see: ");
+            printItems();
+        }
+    }
+
+    public void printOptions() {
+        if (options.size() > 0) {
+            Iterator<Map.Entry<String, Map>> itr1 = options.entrySet().iterator();
             System.out.println("\nHere are your options: ");
             while (itr1.hasNext()) {
-                Map.Entry pair = itr1.next();
+                Map.Entry<String, Map> pair = itr1.next();
                 JSONObject msg = (JSONObject) pair.getValue();
                 System.out.println(pair.getKey() + " : " + msg.get("description"));
             }
