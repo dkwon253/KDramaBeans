@@ -1,13 +1,12 @@
 package com.kdramabeans.game;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
-import org.json.simple.JSONObject;
 
 public class Game {
     Scanner scanner = new Scanner(System.in);
-    Items items = new Items();
     Player player = new Player();
     Story story = new Story();
     boolean enteredQuit = false;
@@ -24,7 +23,10 @@ public class Game {
 
     public void promptUser() {
         story.printStory();
-        String[] input = StringUtils.split(scanner.nextLine(), " ", 2);
+        if(player.getGrabbedItems().size() > 0){
+            story.printOptions();
+        }
+        String[] input = StringUtils.split(scanner.nextLine().toLowerCase(), " ", 2);
 
         if (input[0].equalsIgnoreCase("quit")) {
             System.out.println("Quitting..");
@@ -36,20 +38,24 @@ public class Game {
     }
 
     private void executeCommand(String[] input) {
-        switch (input[0].toUpperCase()) {
-            case "EXAMINE":
+        switch (input[0]) {
+            case "examine":
                 System.out.println("EXAMINE " + input[1]);
                 break;
-            case "USE":
+            case "use":
                 System.out.println("USE " + input[1]);
                 break;
-            case "GRAB":
+            case "grab":
                 System.out.println("GRAB " + input[1]);
+                if(story.hasItem(input[1])){
+                    player.grabItem(input[1]);
+                    story.setOptions(input[1]);
+                }
                 break;
-            case "CHOOSE":
+            case "choose":
                 //System.out.println("CHOOSE " + input[1]);
                 if(story.getOptions().containsKey(input[1])) {
-                    story.setOption(input[1]);
+                    story.setCurrentOption(input[1]);
                     story.nextScene();
                 } else {
                     System.out.println("Not an option");
