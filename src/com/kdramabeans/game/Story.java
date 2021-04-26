@@ -15,6 +15,8 @@ public class Story {
     private Map<String, Map> options = new HashMap<>();
     private String currentOption;
     private List<Item> sceneItems = new ArrayList<Item>();
+    private RandomEvents randomEvents = new RandomEvents();
+    private JSONObject randomEvent = randomEvents.getEvent();
 
     public Story() throws Exception {
         Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/story.json"));
@@ -27,6 +29,7 @@ public class Story {
     public void nextScene() {
         setScene();
         resetOptions();
+        sceneItems.clear();
         setSceneItems();
     }
 
@@ -39,7 +42,14 @@ public class Story {
             System.out.println(msg);
             System.exit(0);
         } else {
-            this.scene = currentScene;
+            Random rand = new Random();
+            int n = rand.nextInt(10);
+            if (n<=2){
+                this.scene = randomEvent;
+            }else{
+                this.scene = currentScene;
+            }
+
         }
     }
 
