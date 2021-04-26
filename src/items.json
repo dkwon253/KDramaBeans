@@ -131,6 +131,34 @@
   },
   "evidence": {
     "description": "The private investigator concludes that the top suspect for your father's murder is Company X's CEO."
+  },
+  "rose":{
+    "description": "Roses are most commonly associated with love and romance.",
+    "option": {
+      "description": "This would lead you to a good start with Lee Ji Eun.",
+      "nextScene": "scene5"
+    }
+  },
+  "daisy": {
+    "description": "Daisies symbolize innocence and purity",
+    "option": {
+      "description": "This would lead you to a good start with Lee Ji Eun.",
+      "nextScene": "scene5"
+    }
+  },
+  "bitcoin": {
+    "description": "Well known cryptocurrency that could make you rich.",
+    "option": {
+      "description": "This would lead you to the wealthy club to meet some important people",
+      "nextScene": "scene7"
+    }
+  },
+  "dogecoin": {
+    "description": "Highly popular cryptocurrency that comes with great risk",
+    "option": {
+      "description": "You lost all your investment, and life becomes sad again.",
+      "nextScene": "mournScene"
+    }
   }
 
 }
