@@ -7,11 +7,11 @@ import java.util.Map;
 public class Player {
     private List<String> grabbedItems = new ArrayList<>();
 
-    public Player(){
+    public Player() {
 
     }
 
-    public void grabItem(String item){
+    public void grabItem(String item) {
         System.out.println("You have grabbed: " + item);
         grabbedItems.add(item);
     }
@@ -20,7 +20,14 @@ public class Player {
         return grabbedItems;
     }
 
-    public boolean hasGrabbedItem(String item){
+    public void printGrabbedItems() {
+        System.out.println("Items in your inventory: " + grabbedItems);
+    }
+
+    public void clearItems() {
+        grabbedItems.clear();
+    }
+    public boolean hasGrabbedItem(String item) {
         return grabbedItems.contains(item);
     }
 
