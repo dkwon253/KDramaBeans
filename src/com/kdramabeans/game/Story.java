@@ -16,6 +16,7 @@ public class Story {
     private String currentOption;
     private List<Item> sceneItems = new ArrayList<Item>();
     private Scanner scanner = new Scanner(System.in);
+
     private RandomEvents randomEvents = new RandomEvents();
     private JSONObject randomEvent = randomEvents.getEvent();
 

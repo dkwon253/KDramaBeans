@@ -43,6 +43,7 @@ public class RandomEvents {
     public static void main(String[] args) throws IOException, ParseException {
         RandomEvents randomEvents = new RandomEvents();
         System.out.println(randomEvents.getItems());
+        System.out.printf("new screen");
     }
 
 }
