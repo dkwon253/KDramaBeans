@@ -15,6 +15,8 @@ public class Story {
     private Map<String, Map> options = new HashMap<>();
     private String currentOption;
     private List<Item> sceneItems = new ArrayList<Item>();
+    private Scanner scanner = new Scanner(System.in);
+
     private RandomEvents randomEvents = new RandomEvents();
     private JSONObject randomEvent = randomEvents.getEvent();
 
@@ -33,44 +35,74 @@ public class Story {
         setSceneItems();
     }
 
-    public void setScene(){
+    //    public void setScene(){
+//        JSONObject newOption = (JSONObject) options.get(currentOption);
+//        String nextScene = (String) newOption.get("nextScene");
+//        JSONObject currentScene = (JSONObject) data.get(nextScene);
+//        if ((boolean) currentScene.get("ending")) {
+//            String msg = (String) currentScene.get("description");
+//            System.out.println(msg);
+//            System.exit(0);
+//        } else {
+//            this.scene = currentScene;
+//        }
+//    }
+    public void setScene() {
         JSONObject newOption = (JSONObject) options.get(currentOption);
         String nextScene = (String) newOption.get("nextScene");
         JSONObject currentScene = (JSONObject) data.get(nextScene);
         if ((boolean) currentScene.get("ending")) {
             String msg = (String) currentScene.get("description");
             System.out.println(msg);
-            System.exit(0);
+            System.out.println("Do you want to play again? ");
+            boolean isRightResponse = false;
+            while (!isRightResponse) {
+                String input = scanner.nextLine().toLowerCase();
+                if (input.equals("yes")) {
+                    isRightResponse = true;
+                    restartGame();
+                } else if (input.equals("no")) {
+                    System.exit(0);
+                }
+            }
+
         } else {
             Random rand = new Random();
             int n = rand.nextInt(10);
-            if (n<=2){
+            if (n <= 2) {
                 this.scene = randomEvent;
-            }else{
+            } else {
                 this.scene = currentScene;
             }
 
         }
     }
 
+    public void restartGame() {
+        this.scene = (JSONObject) data.get("intro");
+        sceneItems.clear();
+        setSceneItems();
+
+    }
+
     public Map<String, Map> getOptions() {
         return options;
     }
 
-    public void setOptions(String item){
+    public void setOptions(String item) {
         String key = Integer.toString(options.size() + 1);
         Item itemObj = sceneItems.stream().filter(obj -> obj.getName().equalsIgnoreCase(item)).findAny().orElse(null);
-        if(itemObj.getOption().get("description") != null){
+        if (itemObj.getOption().get("description") != null) {
             options.put(key, itemObj.getOption());
         }
         sceneItems.remove(itemObj);
     }
 
-    public void resetOptions(){
+    public void resetOptions() {
         options.clear();
     }
 
-    public void setCurrentOption(String option){
+    public void setCurrentOption(String option) {
         this.currentOption = option;
     }
 
@@ -93,13 +125,13 @@ public class Story {
         });
     }
 
-    public boolean hasItem(String item){
+    public boolean hasItem(String item) {
         List items = (List) scene.get("items");
         return items.contains(item);
     }
 
-    private void printItems(){
-        sceneItems.forEach(item-> System.out.println(item.getName()));
+    private void printItems() {
+        sceneItems.forEach(item -> System.out.println(item.getName()));
     }
 
     public void printStory() {

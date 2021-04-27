@@ -23,7 +23,7 @@ public class Game {
 
     public void promptUser() {
         story.printStory();
-        if(player.getGrabbedItems().size() > 0){
+        if (player.getGrabbedItems().size() > 0) {
             story.printOptions();
         }
         String[] input = StringUtils.split(scanner.nextLine().toLowerCase(), " ", 2);
@@ -31,6 +31,9 @@ public class Game {
         if (input[0].equalsIgnoreCase("quit")) {
             System.out.println("Quitting..");
             enteredQuit = true;
+        } else if (input[0].equalsIgnoreCase("restart")) {
+            System.out.println("Restarting..");
+            story.restartGame();
         } else {
             executeCommand(input);
         }
@@ -47,14 +50,14 @@ public class Game {
                 break;
             case "grab":
                 System.out.println("GRAB " + input[1]);
-                if(story.hasItem(input[1])){
+                if (story.hasItem(input[1])) {
                     player.grabItem(input[1]);
                     story.setOptions(input[1]);
                 }
                 break;
             case "choose":
                 //System.out.println("CHOOSE " + input[1]);
-                if(story.getOptions().containsKey(input[1])) {
+                if (story.getOptions().containsKey(input[1])) {
                     story.setCurrentOption(input[1]);
                     story.nextScene();
                 } else {
