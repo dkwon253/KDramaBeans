@@ -1,5 +1,6 @@
 package com.kdramabeans.game;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -9,7 +10,9 @@ public class Game {
     Scanner scanner = new Scanner(System.in);
     Player player = new Player();
     Story story = new Story();
+    Item item = new Item();
     boolean enteredQuit = false;
+    boolean enteredHelp = false;
 
     public Game() throws Exception {
 
@@ -17,25 +20,42 @@ public class Game {
 
     public void start() throws Exception {
         while (!enteredQuit) {
+            if (enteredHelp) {
+                enteredHelp = false;
+            } else {
+                story.printStory();
+                player.printGrabbedItems();
+                story.printItems();
+            }
             promptUser();
         }
     }
 
     public void promptUser() {
-        story.printStory();
+
         if (player.getGrabbedItems().size() > 0) {
             story.printOptions();
         }
-        String[] input = StringUtils.split(scanner.nextLine().toLowerCase(), " ", 2);
 
-        if (input[0].equalsIgnoreCase("quit")) {
-            System.out.println("Quitting..");
-            enteredQuit = true;
-        } else if (input[0].equalsIgnoreCase("restart")) {
-            System.out.println("Restarting..");
-            story.restartGame();
-        } else {
-            executeCommand(input);
+        try {
+            String[] input = StringUtils.split(scanner.nextLine().toLowerCase().trim(), " ", 2);
+            if (input[0].equalsIgnoreCase("quit")) {
+                System.out.println("Quitting..");
+                enteredQuit = true;
+            } else if (input[0].equalsIgnoreCase("restart")) {
+                System.out.println("Restarting..");
+                story.restartGame();
+                player.clearItems();
+
+            } else if (input[0].equalsIgnoreCase("help")) {
+                System.out.println("These are your commands:\n" +
+                        "EXAMINE + GRAB + CHOOSE + QUIT + RESTART\n");
+                enteredHelp = true;
+            } else {
+                executeCommand(input);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: you didn't enter anything");
         }
 
     }
@@ -43,20 +63,21 @@ public class Game {
     private void executeCommand(String[] input) {
         switch (input[0]) {
             case "examine":
-                System.out.println("EXAMINE " + input[1]);
-                break;
-            case "use":
-                System.out.println("USE " + input[1]);
+                if (story.hasItem(input[1]) || player.hasGrabbedItem(input[1])) {
+                    item.getItemDescription(input[1]);
+                } else {
+                    System.out.println("You cannot examine that.");
+                }
                 break;
             case "grab":
-                System.out.println("GRAB " + input[1]);
-                if (story.hasItem(input[1])) {
+                if (story.hasItem(input[1]) && !player.hasGrabbedItem(input[1])) {
                     player.grabItem(input[1]);
                     story.setOptions(input[1]);
+                } else {
+                    System.out.println("You cannot grab that.");
                 }
                 break;
             case "choose":
-                //System.out.println("CHOOSE " + input[1]);
                 if (story.getOptions().containsKey(input[1])) {
                     story.setCurrentOption(input[1]);
                     story.nextScene();
@@ -67,12 +88,6 @@ public class Game {
             default:
                 System.out.println("Not a command");
         }
-// will use later
-//        if (items.contains(input[1].toLowerCase())) {
-//            System.out.println("yay");
-//        } else {
-//            System.out.println("Item: " + input[1] + " is not there!");
-//        }
     }
 
     public enum COMMANDS {

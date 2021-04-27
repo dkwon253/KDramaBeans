@@ -14,6 +14,12 @@ public class Item {
     private String description;
     private Map option;
 
+    public Item() throws Exception {
+        Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/items.json"));
+        JSONObject jsonObj = (JSONObject) obj;
+        this.data = jsonObj;
+    }
+
     public Item(String item) throws Exception {
         Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/items.json"));
         JSONObject jsonObj = (JSONObject) obj;
@@ -28,8 +34,10 @@ public class Item {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public void getItemDescription(String itemName) {
+        JSONObject itemObj = (JSONObject) data.get(itemName);
+        String itemD = (String) itemObj.get("description");
+        System.out.println(itemName + ": " + itemD);
     }
 
     public Map getOption() {
@@ -40,7 +48,7 @@ public class Item {
         this.option = ((Map) itemObj.get("option"));
     }
 
-    public boolean contains(String item){
+    public boolean contains(String item) {
         return data.containsKey(item);
     }
 }
