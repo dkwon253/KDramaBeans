@@ -82,9 +82,8 @@ public class Story {
         this.scene = (JSONObject) data.get("intro");
         sceneItems.clear();
         setSceneItems();
-
+        resetOptions();
     }
-
     public Map<String, Map> getOptions() {
         return options;
     }
@@ -125,23 +124,35 @@ public class Story {
         });
     }
 
-    public boolean hasItem(String item) {
-        List items = (List) scene.get("items");
-        return items.contains(item);
+    public boolean hasItem(String itemName) {
+        boolean result = false;
+        for (int index = 0; index < sceneItems.size(); index++) {
+            if (sceneItems.get(index).getName().equalsIgnoreCase(itemName)) {
+                result = true;
+            }
+        }
+        return result;
     }
 
-    private void printItems() {
-        sceneItems.forEach(item -> System.out.println(item.getName()));
-    }
-
-    public void printStory() {
-        System.out.println("These are your commands:\n" +
-                "EXAMINE + USE + GRAB + CHOOSE\n");
-        System.out.println(getDescription());
+    public void printItems() {
         if (!getEnding()) {
             System.out.println("Here are the items you see: ");
-            printItems();
+            sceneItems.forEach(item -> System.out.println(item.getName()));
         }
+    }
+
+//    public void printStory() {
+//        System.out.println("These are your commands:\n" +
+//                "EXAMINE + USE + GRAB + CHOOSE\n");
+//        System.out.println(getDescription());
+//        if (!getEnding()) {
+//            System.out.println("Here are the items you see: ");
+//            printItems();
+//        }
+//    }
+
+    public void printStory() {
+        System.out.println(getDescription());
     }
 
     public void printOptions() {
