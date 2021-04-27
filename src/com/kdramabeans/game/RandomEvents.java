@@ -36,6 +36,10 @@ public class RandomEvents {
         return (ArrayList) event.get("items");
     }
 
+    public JSONObject getEvent() {
+        return event;
+    }
+
     public static void main(String[] args) throws IOException, ParseException {
         RandomEvents randomEvents = new RandomEvents();
         System.out.println(randomEvents.getItems());
