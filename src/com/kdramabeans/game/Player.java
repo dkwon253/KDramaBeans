@@ -2,34 +2,41 @@ package com.kdramabeans.game;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Player {
-    private List<String> grabbedItems = new ArrayList<>();
+    /*
+      FIELDS
+     */
+    private List<String> grabbedItems = new ArrayList<>(); //player's inventory
 
-    public Player() {
-
-    }
-
+    /*
+      METHODS/FUNCTIONS
+     */
+    //adds an item to the Player's inventory
     public void grabItem(String item) {
         System.out.println("You have grabbed: " + item);
         grabbedItems.add(item);
     }
 
-    public List<String> getGrabbedItems() {
-        return grabbedItems;
-    }
-
+    // dynamically prints items in your inventory when player chooses to grab from the scene
     public void printGrabbedItems() {
         System.out.println("Items in your inventory: " + grabbedItems);
     }
 
-    public void clearItems() {
-        grabbedItems.clear();
-    }
+    //check if inventory contains the grabbed item
     public boolean hasGrabbedItem(String item) {
         return grabbedItems.contains(item);
     }
 
+    //clears items in the inventory
+    public void clearItems() {
+        grabbedItems.clear();
+    }
 
+    /*
+      GETTER
+     */
+    public List<String> getGrabbedItems() {
+        return grabbedItems;
+    }
 }
