@@ -1,6 +1,9 @@
 package com.kdramabeans.game;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -28,7 +31,10 @@ public class Story {
     }
 
     public Story() throws Exception {
-        Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/story.json"));
+//        Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/story.json"));
+        InputStreamReader file = new InputStreamReader(this.getClass().getResourceAsStream("story.json"),
+                StandardCharsets.UTF_8);
+        Object obj = new JSONParser().parse(file);
         JSONObject jsonObj = (JSONObject) obj;
         this.data = jsonObj;
         this.scene = (JSONObject) jsonObj.get("intro");
