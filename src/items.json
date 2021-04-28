@@ -10,6 +10,10 @@
     "description": "You might need some money",
     "option": {}
   },
+  "luggage": {
+    "description": "You packed up some clothes and ready to go",
+    "option": {}
+  },
   "voice recorder": {
     "description": "Your old-school voice recorder. There's still some room left to record something...",
     "option": {
@@ -24,6 +28,10 @@
       "nextScene": "candyCrush"
     }
   },
+  "sun glasses": {
+    "description": "This would come in handy for drivers",
+    "option": {}
+  },
   "watch": {
     "description": "You find an odd microchip taped on the backside of the watch",
     "option": {
@@ -37,6 +45,10 @@
       "description": "Continue to mourn for your father's death",
       "nextScene": "mournScene"
     }
+  },
+  "will": {
+    "description": "Looks like you are the beneficiary for his insurance policy",
+    "option": {}
   },
   "ticket": {
     "description": "It's the opening ceremony ticket to the 2021 Tokyo Olympic Games!",
@@ -157,6 +169,20 @@
     "description": "Highly popular cryptocurrency that comes with great risk",
     "option": {
       "description": "You lost all your investment, and life becomes sad again.",
+      "nextScene": "mournScene"
+    }
+  },
+  "bike": {
+    "description": "Looks like you can use this to runaway",
+    "option": {
+      "description": "You successfully ran away.",
+      "nextScene": "scene4"
+    }
+  },
+  "stick": {
+    "description": "Looks like you can use this to fight back",
+    "option": {
+      "description": "You lost the battle and got killed",
       "nextScene": "mournScene"
     }
   }
