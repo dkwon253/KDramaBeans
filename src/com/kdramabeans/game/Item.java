@@ -1,5 +1,8 @@
 package com.kdramabeans.game;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import java.io.FileReader;
@@ -15,13 +18,19 @@ public class Item {
     private Map option;
 
     public Item() throws Exception {
-        Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/items.json"));
+//        Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/items.json"));
+        InputStreamReader file = new InputStreamReader(this.getClass().getResourceAsStream("items.json"),
+                StandardCharsets.UTF_8);
+        Object obj = new JSONParser().parse(file);
         JSONObject jsonObj = (JSONObject) obj;
         this.data = jsonObj;
     }
 
     public Item(String item) throws Exception {
-        Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/items.json"));
+//        Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/items.json"));
+        InputStreamReader file = new InputStreamReader(this.getClass().getResourceAsStream("items.json"),
+                StandardCharsets.UTF_8);
+        Object obj = new JSONParser().parse(file);
         JSONObject jsonObj = (JSONObject) obj;
         JSONObject itemObj = (JSONObject) jsonObj.get(item);
         this.data = jsonObj;
