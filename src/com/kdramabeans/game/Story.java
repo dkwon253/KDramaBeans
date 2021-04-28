@@ -16,9 +16,16 @@ public class Story {
     private String currentOption;
     private List<Item> sceneItems = new ArrayList<Item>();
     private Scanner scanner = new Scanner(System.in);
-    private Player player = new Player();
-    private RandomEvents randomEvents = new RandomEvents();
-    private JSONObject randomEvent = randomEvents.getEvent();
+    private JSONObject randomEvent = new RandomEvents().getEvent();
+    boolean isRestart = false;
+
+    public boolean isRestart() {
+        return isRestart;
+    }
+
+    public void setRestart(boolean restart) {
+        isRestart = restart;
+    }
 
     public Story() throws Exception {
         Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/story.json"));
@@ -35,18 +42,6 @@ public class Story {
         setSceneItems();
     }
 
-    //    public void setScene(){
-//        JSONObject newOption = (JSONObject) options.get(currentOption);
-//        String nextScene = (String) newOption.get("nextScene");
-//        JSONObject currentScene = (JSONObject) data.get(nextScene);
-//        if ((boolean) currentScene.get("ending")) {
-//            String msg = (String) currentScene.get("description");
-//            System.out.println(msg);
-//            System.exit(0);
-//        } else {
-//            this.scene = currentScene;
-//        }
-//    }
     public void setScene() {
         JSONObject newOption = (JSONObject) options.get(currentOption);
         String nextScene = (String) newOption.get("nextScene");
@@ -60,6 +55,7 @@ public class Story {
                 String input = scanner.nextLine().toLowerCase();
                 if (input.equals("yes")) {
                     isRightResponse = true;
+                    isRestart = true;
                     restartGame();
                 } else if (input.equals("no")) {
                     System.exit(0);
@@ -73,7 +69,6 @@ public class Story {
             } else {
                 this.scene = currentScene;
             }
-
         }
     }
 
@@ -83,6 +78,7 @@ public class Story {
         setSceneItems();
         resetOptions();
     }
+
     public Map<String, Map> getOptions() {
         return options;
     }

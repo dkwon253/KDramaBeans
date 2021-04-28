@@ -2,17 +2,17 @@
   "intro": {
     "description": "This story is about a man seeking revenge for the murder of his father. Your name is Park Ji Woo and you have become a successful entrepreneur in the states. You come back to South Korea under the alias of Daniel Park and your goal is to destroy X Company.",
     "ending": false,
-    "items": ["passport", "wallet"]
+    "items": ["passport", "wallet", "luggage"]
   },
   "scene1": {
     "description": "Park Ji Woo's father, Park Ji Sung is driving his boss, Lee Jin Wook to work. He is suddenly asked to pull over as his boss receives an urgent phone call. His boss looks frantic.",
     "ending": false,
-    "items": ["voice recorder", "phone"]
+    "items": ["voice recorder", "phone", "sun glasses"]
   },
   "scene2": {
     "description": "The next day, your father leaves work to pick you up from school. Another car crashed into your dad's car, right in the front of the school gate. You come out of school only to find your dad is dead, and no other vehicle in sight. The only thing left besides your dad's body is his favorite watch and a picture of you two. Today, you became an orphan, you have no other family members.",
     "ending": false,
-    "items": ["watch", "picture"]
+    "items": ["watch", "will", "picture"]
   },
   "scene3": {
     "description": "You have been adopted by an American family and moved to New York. You attend and graduate at the top of your class from Yale University. You go on to become a successful entrepreneur and are famous all throughout the world. Little do people know, your only goal in life is to get back at the person who murdered your father.",
@@ -47,7 +47,7 @@
       },
       "2": {
         "description": "Show interest in buying some of Company X's shares",
-        "nextScene": "scene3",
+        "nextScene": "scene8",
         "itemDescription": "He offers you an outrageous price of selling his shares. You reject his offer."
       }
     }

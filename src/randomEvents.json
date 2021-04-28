@@ -8,5 +8,10 @@
     "description": "cryptocurrency price is at all time low, do you want to buy in?",
     "ending": false,
     "items": ["bitcoin", "dogecoin"]
+  },
+  "event2": {
+    "description": "You are alone walking down the street, all of sudden, you are jumped by a beefy looking guy",
+    "ending": false,
+    "items": ["bike", "stick"]
   }
 }
