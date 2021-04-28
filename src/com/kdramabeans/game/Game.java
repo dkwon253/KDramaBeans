@@ -23,6 +23,10 @@ public class Game {
             if (enteredHelp) {
                 enteredHelp = false;
             } else {
+                if (story.isRestart()){
+                    player.clearItems();
+                    story.setRestart(false);
+                }
                 story.printStory();
                 player.printGrabbedItems();
                 story.printItems();
