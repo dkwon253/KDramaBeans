@@ -16,7 +16,7 @@ public class Story {
     private String currentOption;
     private List<Item> sceneItems = new ArrayList<Item>();
     private Scanner scanner = new Scanner(System.in);
-
+    private Player player = new Player();
     private RandomEvents randomEvents = new RandomEvents();
     private JSONObject randomEvent = randomEvents.getEvent();
 
@@ -65,7 +65,6 @@ public class Story {
                     System.exit(0);
                 }
             }
-
         } else {
             Random rand = new Random();
             int n = rand.nextInt(10);

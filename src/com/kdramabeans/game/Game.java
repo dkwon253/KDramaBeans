@@ -32,11 +32,9 @@ public class Game {
     }
 
     public void promptUser() {
-
         if (player.getGrabbedItems().size() > 0) {
             story.printOptions();
         }
-
         try {
             String[] input = StringUtils.split(scanner.nextLine().toLowerCase().trim(), " ", 2);
             if (input[0].equalsIgnoreCase("quit")) {
@@ -57,7 +55,6 @@ public class Game {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Error: you didn't enter anything");
         }
-
     }
 
     private void executeCommand(String[] input) {
