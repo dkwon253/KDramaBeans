@@ -1,24 +1,30 @@
 package com.kdramabeans.game;
 
-import java.util.Arrays;
-import java.util.Locale;
 import java.util.Scanner;
-
 import org.apache.commons.lang3.StringUtils;
 
 public class Game {
-    Scanner scanner = new Scanner(System.in);
-    Player player = new Player();
-    Story story = new Story();
-    Item item = new Item();
+    /*
+        fields
+     */
+    private Scanner scanner = new Scanner(System.in);
+    private Player player = new Player();
+    private Story story = new Story();
+    private Item item = new Item();
     boolean enteredQuit = false;
     boolean enteredHelp = false;
 
-    public Game() throws Exception {
+    /*
+        ctor
+     */
+    public Game() throws Exception {}
 
-    }
+    /*
+        methods/functions
+     */
 
-    public void start() throws Exception {
+    //this method keeps the user in a loop -- will keep prompting them until they enter "quit"
+    public void start() {
         while (!enteredQuit) {
             if (enteredHelp) {
                 enteredHelp = false;
@@ -35,35 +41,39 @@ public class Game {
         }
     }
 
-    public void promptUser() {
-
+    //prompts the user to enter a command and/or noun, and captures the input to determine next move
+    private void promptUser() {
         if (player.getGrabbedItems().size() > 0) {
             story.printOptions();
         }
 
         try {
             String[] input = StringUtils.split(scanner.nextLine().toLowerCase().trim(), " ", 2);
-            if (input[0].equalsIgnoreCase("quit")) {
-                System.out.println("Quitting..");
-                enteredQuit = true;
-            } else if (input[0].equalsIgnoreCase("restart")) {
-                System.out.println("Restarting..");
-                story.restartGame();
-                player.clearItems();
-
-            } else if (input[0].equalsIgnoreCase("help")) {
-                System.out.println("These are your commands:\n" +
-                        "EXAMINE + GRAB + CHOOSE + QUIT + RESTART\n");
-                enteredHelp = true;
-            } else {
-                executeCommand(input);
+            switch(input[0]){
+                case "quit":
+                    System.out.println("Quitting..");
+                    enteredQuit = true;
+                    break;
+                case "restart":
+                    System.out.println("Restarting..");
+                    story.restartGame();
+                    player.clearItems();
+                    break;
+                case "help":
+                    System.out.println("These are your commands:\n" +
+                            "EXAMINE + GRAB + CHOOSE + QUIT + RESTART\n");
+                    enteredHelp = true;
+                    break;
+                default:
+                    executeCommand(input);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Error: you didn't enter anything");
+            System.out.println("Error: you didn't enter your move correctly");
         }
 
     }
 
+    // function that reads user's input and executes based on command
     private void executeCommand(String[] input) {
         switch (input[0]) {
             case "examine":
@@ -94,7 +104,4 @@ public class Game {
         }
     }
 
-    public enum COMMANDS {
-        EXAMINE, USE, GET, QUIT;
-    }
 }

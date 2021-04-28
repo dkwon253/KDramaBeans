@@ -1,46 +1,45 @@
 package com.kdramabeans.game;
 
-import java.io.FileReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class Story {
 
+    /*
+        fields
+     */
     private JSONObject data;
     private JSONObject scene;
     private Map<String, Map> options = new HashMap<>();
     private String currentOption;
-    private List<Item> sceneItems = new ArrayList<Item>();
+    private List<Item> sceneItems = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private JSONObject randomEvent = new RandomEvents().getEvent();
-    boolean isRestart = false;
+    private boolean isRestart = false;
 
-    public boolean isRestart() {
-        return isRestart;
-    }
-
-    public void setRestart(boolean restart) {
-        isRestart = restart;
-    }
-
+    /*ctor
+      gets story information from a .json file, makes it into a JSON object, and then saves the current scene
+      to be "intro" and saves the items that are in the scene into a List called "sceneItems"
+     */
     public Story() throws Exception {
-//        Object obj = new JSONParser().parse(new FileReader("../KDramaBeans/src/story.json"));
         InputStreamReader file = new InputStreamReader(this.getClass().getResourceAsStream("story.json"),
                 StandardCharsets.UTF_8);
         Object obj = new JSONParser().parse(file);
         JSONObject jsonObj = (JSONObject) obj;
         this.data = jsonObj;
+        //set "intro" as starting scene
         this.scene = (JSONObject) jsonObj.get("intro");
         setSceneItems();
     }
 
+    /*
+        methods/functions
+     */
+
+    //brings user to the next scene by resetting the scene, the items in the scene, and clearing their options
     public void nextScene() {
         setScene();
         resetOptions();
@@ -48,47 +47,56 @@ public class Story {
         setSceneItems();
     }
 
+    // sets the scene, it will check if the scene ends the game or not and display the description
     public void setScene() {
         JSONObject newOption = (JSONObject) options.get(currentOption);
         String nextScene = (String) newOption.get("nextScene");
         JSONObject currentScene = (JSONObject) data.get(nextScene);
         if ((boolean) currentScene.get("ending")) {
-            String msg = (String) currentScene.get("description");
-            System.out.println(msg);
-            System.out.println("Do you want to play again? ");
-            boolean isRightResponse = false;
-            while (!isRightResponse) {
-                String input = scanner.nextLine().toLowerCase();
-                if (input.equals("yes")) {
-                    isRightResponse = true;
-                    isRestart = true;
-                    restartGame();
-                } else if (input.equals("no")) {
-                    System.exit(0);
-                }
-            }
+            runEndingScene(currentScene);
         } else {
-            Random rand = new Random();
-            int n = rand.nextInt(10);
-            if (n <= 2) {
-                this.scene = randomEvent;
-            } else {
-                this.scene = currentScene;
+            randomOrNextScene(currentScene);
+        }
+    }
+
+    //if the user has hit a "dead end" they have the option to restart the game
+    private void runEndingScene(JSONObject currentScene){
+        String msg = (String) currentScene.get("description");
+        System.out.println(msg);
+        System.out.println("Do you want to play again? ");
+        boolean isRightResponse = false;
+        while (!isRightResponse) {
+            String input = scanner.nextLine().toLowerCase();
+            if (input.equals("yes")) {
+                isRightResponse = true;
+                isRestart = true;
+                restartGame();
+            } else if (input.equals("no")) {
+                System.exit(0);
             }
         }
     }
 
-    public void restartGame() {
+    //this will set either a "random" scene or user's choice of scene
+    private void randomOrNextScene(JSONObject currentScene){
+        Random rand = new Random();
+        int n = rand.nextInt(10);
+        if (n <= 2) {
+            this.scene = randomEvent;
+        } else {
+            this.scene = currentScene;
+        }
+    }
+
+    // restarts the game - resets scene back to intro and clears all options and items
+    void restartGame() {
         this.scene = (JSONObject) data.get("intro");
         sceneItems.clear();
         setSceneItems();
         resetOptions();
     }
 
-    public Map<String, Map> getOptions() {
-        return options;
-    }
-
+    // pulls from items.json and sets the options the player can choose
     public void setOptions(String item) {
         String key = Integer.toString(options.size() + 1);
         Item itemObj = sceneItems.stream().filter(obj -> obj.getName().equalsIgnoreCase(item)).findAny().orElse(null);
@@ -98,22 +106,7 @@ public class Story {
         sceneItems.remove(itemObj);
     }
 
-    public void resetOptions() {
-        options.clear();
-    }
-
-    public void setCurrentOption(String option) {
-        this.currentOption = option;
-    }
-
-    public String getDescription() {
-        return (String) scene.get("description");
-    }
-
-    public boolean getEnding() {
-        return (boolean) scene.get("ending");
-    }
-
+    // pulls from items list in story.json and displays choices to the player
     private void setSceneItems() {
         List items = (List) scene.get("items");
         items.forEach(item -> {
@@ -125,6 +118,7 @@ public class Story {
         });
     }
 
+    //check if current scene has the item by comparing to the name of each item
     public boolean hasItem(String itemName) {
         boolean result = false;
         for (int index = 0; index < sceneItems.size(); index++) {
@@ -135,6 +129,7 @@ public class Story {
         return result;
     }
 
+    // prints items for the currentScene
     public void printItems() {
         if (!getEnding()) {
             System.out.println("Here are the items you see: ");
@@ -142,20 +137,12 @@ public class Story {
         }
     }
 
-//    public void printStory() {
-//        System.out.println("These are your commands:\n" +
-//                "EXAMINE + USE + GRAB + CHOOSE\n");
-//        System.out.println(getDescription());
-//        if (!getEnding()) {
-//            System.out.println("Here are the items you see: ");
-//            printItems();
-//        }
-//    }
-
+    // prints the story description
     public void printStory() {
         System.out.println(getDescription());
     }
 
+    // iterates over story.json and depending on the item picked, will give you certain options
     public void printOptions() {
         if (options.size() > 0) {
             Iterator<Map.Entry<String, Map>> itr1 = options.entrySet().iterator();
@@ -166,5 +153,36 @@ public class Story {
                 System.out.println(pair.getKey() + " : " + msg.get("description"));
             }
         }
+    }
+
+    /*
+     getters and setters for private fields
+     */
+    public void resetOptions() {
+        options.clear();
+    }
+
+    public void setCurrentOption(String option) {
+        this.currentOption = option;
+    }
+
+    public Map<String, Map> getOptions() {
+        return options;
+    }
+
+    public String getDescription() {
+        return (String) scene.get("description");
+    }
+
+    public boolean getEnding() {
+        return (boolean) scene.get("ending");
+    }
+
+    public boolean isRestart() {
+        return isRestart;
+    }
+
+    public void setRestart(boolean restart) {
+        isRestart = restart;
     }
 }
