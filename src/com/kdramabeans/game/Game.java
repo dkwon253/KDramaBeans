@@ -1,6 +1,7 @@
 package com.kdramabeans.game;
 
-import java.util.Scanner;
+import java.util.*;
+
 import org.apache.commons.lang3.StringUtils;
 
 public class Game {
@@ -14,6 +15,7 @@ public class Game {
     private BGM music = new BGM();
     boolean enteredQuit = false;
     boolean enteredHelp = false;
+    private List<String> eventItems = Arrays.asList("wallet", "watch", "business card");
 
     /*
         ctor
@@ -39,9 +41,17 @@ public class Game {
                 player.printGrabbedItems();
                 story.printItems();
             }
+            if(hasEventItem()){
+                story.setEventTrigger(true);
+            }
             promptUser();
         }
         music.stopSong();
+    }
+
+    //check if the player's grabbed items has the event trigger items.
+    private boolean hasEventItem() {
+        return !Collections.disjoint(player.getGrabbedItems(), eventItems);
     }
 
     //prompts the user to enter a command and/or noun, and captures the input to determine next move
