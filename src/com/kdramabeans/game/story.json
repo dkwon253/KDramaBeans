@@ -37,20 +37,7 @@
   "scene7": {
     "description": "You meet a board member of Company X, and he was quite happy about RDX-90 possibly going on sale in the United States",
     "ending": false,
-    "items": ["ipa", "truly"],
-    "option": {
-      "1": {
-        "description": "Talk about safety issue of RDX-90",
-        "nextScene": "scene8",
-        "item": "company shares",
-        "itemDescription": "The board member expresses concerns of the RDX-90 launch after your conversation. You offer to buy some of the company shares from him to mitigate the loss. He agrees to give you half of his shares."
-      },
-      "2": {
-        "description": "Show interest in buying some of Company X's shares",
-        "nextScene": "scene8",
-        "itemDescription": "He offers you an outrageous price of selling his shares. You reject his offer."
-      }
-    }
+    "items": ["ipa", "truly"]
   },
   "scene8": {
     "description": "You've collected enough information about the safety concerns of RDX-90 along with the plagiarized clinical trials. You meet an American reporter in a cafe shop to transfer all the information you have on Company X. As soon as you are about to give the report, Lee Ji Eun, who has been tailing you, interrupts your conversation.",

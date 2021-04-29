@@ -124,7 +124,7 @@
     "description": "Basic.",
     "option": {
       "description": "Show interest in buying some of Company X's shares",
-      "nextScene": "scene3"
+      "nextScene": "scene8"
     }
   },
   "kimchi": {

@@ -119,6 +119,16 @@ public class Game {
                     System.out.println("Not an option\n");
                 }
                 break;
+            case "use":
+                if (player.hasGrabbedItem(input[1])){
+                    //TODO: do something here
+                    player.getGrabbedItems().remove(input[1]);
+                    System.out.println("You have used : " + input[1]);
+
+                } else{
+                    System.out.println("You don't have this item in your inventory");
+                }
+                break;
             default:
                 System.out.println("Not a command\n");
         }
