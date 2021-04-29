@@ -1,8 +1,8 @@
 package com.kdramabeans.game;
 
+import java.io.File;
 import java.util.Scanner;
 import java.util.*;
-
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -65,6 +65,7 @@ public class Game {
         try {
             String[] input = StringUtils.split(scanner.nextLine().toLowerCase().trim(), " ", 2);
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
             switch (input[0]) {
                 case "quit":
                     System.out.println("Quitting...");
@@ -104,7 +105,7 @@ public class Game {
                 break;
             case "grab":
                 if (story.hasItem(input[1]) && !player.hasGrabbedItem(input[1])) {
-                    if(player.grabItem(input[1])) {
+                    if (player.grabItem(input[1])) {
                         story.setOptions(input[1]);
                     }
                 } else {
@@ -115,6 +116,9 @@ public class Game {
                 if (story.getOptions().containsKey(input[1])) {
                     story.setCurrentOption(input[1]);
                     story.nextScene();
+                    if (story.isAtEnd()) {
+                        music.changeSong(new File("..KDramaBeans/songs/sad.wav").toURI().toString());
+                    }
                 } else {
                     System.out.println("Not an option\n");
                 }

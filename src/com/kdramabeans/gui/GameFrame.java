@@ -1,35 +1,42 @@
 package com.kdramabeans.gui;
 
+import com.kdramabeans.game.*;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GameFrame {
+    private BGM music = new BGM();
     private JFrame window;
-    private JPanel titleNamePanel, startButtonPanel, mainTextPanel;
-    private JLabel titleNameLabel;
-    private JButton startButton;
+    private JPanel titleNamePanel, buttonPanel, mainTextPanel;
+    private JLabel titleNameLabel, lblGif;
+    private JButton startButton , nextButton;
     private JTextArea mainTextArea;
     private Container container;
     private static final Font titleFont = new Font("Times New Roman", Font.BOLD, 30);
     private static final Font normalFont = new Font("Times New Roman", Font.PLAIN, 15);
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
+    GifScreenHandler gifHandler = new GifScreenHandler();
 
     /*
       ctor that initializes the home page of the game
      */
-    public GameFrame() {
+    public GameFrame() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         window = new JFrame();
         titleNamePanel = new JPanel();
-        startButtonPanel = new JPanel();
+        buttonPanel = new JPanel();
         startButton = new JButton("Start");
 
         // JFrame setup
         window.setSize(800, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().setBackground(Color.black);
+        window.getContentPane().setBackground(Color.yellow);
         window.setLayout(null);
         window.setTitle("KDramaBeans Game");
         container = window.getContentPane();
@@ -42,8 +49,8 @@ public class GameFrame {
         titleNameLabel.setFont(titleFont);
 
         // start button setup - should link to the start of the game
-        startButtonPanel.setBounds(300, 400, 200, 100);
-        startButtonPanel.setBackground(Color.blue);
+        buttonPanel.setBounds(300, 400, 200, 100);
+        buttonPanel.setBackground(Color.blue);
         startButton.setBackground(Color.white);
         startButton.setForeground(Color.black);
         startButton.setFont(normalFont);
@@ -51,16 +58,19 @@ public class GameFrame {
 
         // calls up all the components and makes the screen visible
         titleNamePanel.add(titleNameLabel);
-        startButtonPanel.add(startButton);
+        buttonPanel.add(startButton);
         container.add(titleNamePanel);
-        container.add(startButtonPanel);
+        container.add(buttonPanel);
         window.setVisible(true);
+
+
     }
 
     public void createGameScreen() {
         // disables to home page panel and will display panel below
         titleNamePanel.setVisible(false);
-        startButtonPanel.setVisible(false);
+        buttonPanel.setVisible(false);
+        container.remove(lblGif);
 
         // sets up the panel
         mainTextPanel = new JPanel();
@@ -78,7 +88,35 @@ public class GameFrame {
         container.add(mainTextPanel);
     }
 
+    public void displayGif(){
+        titleNamePanel.setVisible(false);
+        buttonPanel.remove(startButton);
+
+        String path = "/Users/kathyle27/Documents/GitHub/KDramaBeans/images/koreanair.gif";
+        Icon imgGif = new ImageIcon(path);
+        lblGif = new JLabel();
+        lblGif.setIcon(imgGif);
+        lblGif.setBounds(150,150, 455, 170);
+        container.add(lblGif);
+
+        //button
+        nextButton = new JButton("Next");
+        nextButton.setBackground(Color.white);
+        nextButton.setForeground(Color.black);
+        nextButton.setFont(normalFont);
+        nextButton.addActionListener(gifHandler);
+        buttonPanel.add(nextButton);
+
+    }
+
     public class TitleScreenHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            music.playSong();
+            displayGif();
+        }
+    }
+    public class GifScreenHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             createGameScreen();

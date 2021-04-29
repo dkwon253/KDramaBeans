@@ -20,6 +20,8 @@ public class Story {
     private JSONObject randomEvent = new RandomEvents().getEvent();
     private boolean isRestart = false;
     private boolean eventTrigger = false;
+    private boolean isAtEnd = false;
+
 
     /*ctor
       gets story information from a .json file, makes it into a JSON object, and then saves the current scene
@@ -49,11 +51,12 @@ public class Story {
     }
 
     // sets the scene, it will check if the scene ends the game or not and display the description
-    public void setScene() {
+    private void setScene() {
         JSONObject newOption = (JSONObject) options.get(currentOption);
         String nextScene = (String) newOption.get("nextScene");
         JSONObject currentScene = (JSONObject) data.get(nextScene);
         if ((boolean) currentScene.get("ending")) {
+            isAtEnd = true;
             runEndingScene(currentScene);
         } else if (eventTrigger){
             randomOrNextScene(currentScene);
@@ -73,6 +76,7 @@ public class Story {
             if (input.equals("yes")) {
                 isRightResponse = true;
                 isRestart = true;
+                isAtEnd = false;
                 restartGame();
             } else if (input.equals("no")) {
                 System.exit(0);
@@ -189,7 +193,12 @@ public class Story {
         isRestart = restart;
     }
 
+
     public void setEventTrigger(boolean eventTrigger) {
         this.eventTrigger = eventTrigger;
+    }
+
+    public boolean isAtEnd() {
+        return isAtEnd;
     }
 }
