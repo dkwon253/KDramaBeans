@@ -14,7 +14,7 @@ public class Player {
      */
     //adds an item to the Player's inventory
     public void grabItem(String item) {
-        System.out.println("You have grabbed: " + item);
+        System.out.println("You have grabbed: " + item + "\n");
         grabbedItems.add(item);
     }
 
