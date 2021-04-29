@@ -1,6 +1,8 @@
 package com.kdramabeans.game;
 
+import java.util.Scanner;
 import java.util.*;
+
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,7 +22,8 @@ public class Game {
     /*
         ctor
      */
-    public Game() throws Exception {}
+    public Game() throws Exception {
+    }
 
     /*
         methods/functions
@@ -33,7 +36,7 @@ public class Game {
             if (enteredHelp) {
                 enteredHelp = false;
             } else {
-                if (story.isRestart()){
+                if (story.isRestart()) {
                     player.clearItems();
                     story.setRestart(false);
                 }
@@ -59,16 +62,16 @@ public class Game {
         if (player.getGrabbedItems().size() > 0) {
             story.printOptions();
         }
-
         try {
             String[] input = StringUtils.split(scanner.nextLine().toLowerCase().trim(), " ", 2);
-            switch(input[0]){
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            switch (input[0]) {
                 case "quit":
-                    System.out.println("Quitting..");
+                    System.out.println("Quitting...");
                     enteredQuit = true;
                     break;
                 case "restart":
-                    System.out.println("Restarting..");
+                    System.out.println("Restarting...");
                     story.restartGame();
                     player.clearItems();
                     break;
@@ -93,7 +96,7 @@ public class Game {
                 if (story.hasItem(input[1]) || player.hasGrabbedItem(input[1])) {
                     item.getItemDescription(input[1]);
                 } else {
-                    System.out.println("You cannot examine that.");
+                    System.out.println("You cannot examine that.\n");
                 }
                 break;
             case "drop":
@@ -105,7 +108,7 @@ public class Game {
                         story.setOptions(input[1]);
                     }
                 } else {
-                    System.out.println("You cannot grab that.");
+                    System.out.println("You cannot grab that.\n");
                 }
                 break;
             case "choose":
@@ -113,11 +116,11 @@ public class Game {
                     story.setCurrentOption(input[1]);
                     story.nextScene();
                 } else {
-                    System.out.println("Not an option");
+                    System.out.println("Not an option\n");
                 }
                 break;
             default:
-                System.out.println("Not a command");
+                System.out.println("Not a command\n");
         }
     }
 

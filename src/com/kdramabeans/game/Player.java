@@ -28,7 +28,7 @@ public class Player {
     public boolean grabItem(String item) {
         boolean canGrab = false;
         if(grabbedItems.size() < max_inventory){
-            System.out.println("You have grabbed: " + item);
+            System.out.println("You have grabbed: " + item + "\n");
             grabbedItems.add(item);
             canGrab = true;
         }

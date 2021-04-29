@@ -135,14 +135,14 @@ public class Story {
     // prints items for the currentScene
     public void printItems() {
         if (!getEnding()) {
-            System.out.println("Here are the items you see: ");
+            System.out.println("\nHere are the items you see: ");
             sceneItems.forEach(item -> System.out.println(item.getName()));
         }
     }
 
     // prints the story description
     public void printStory() {
-        System.out.println(getDescription());
+        System.out.println("SCENE: \n" + getDescription() + "\n");
     }
 
     // iterates over story.json and depending on the item picked, will give you certain options
