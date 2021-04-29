@@ -19,6 +19,7 @@ public class Story {
     private Scanner scanner = new Scanner(System.in);
     private JSONObject randomEvent = new RandomEvents().getEvent();
     private boolean isRestart = false;
+    private boolean eventTrigger = false;
 
     /*ctor
       gets story information from a .json file, makes it into a JSON object, and then saves the current scene
@@ -54,8 +55,10 @@ public class Story {
         JSONObject currentScene = (JSONObject) data.get(nextScene);
         if ((boolean) currentScene.get("ending")) {
             runEndingScene(currentScene);
-        } else {
+        } else if (eventTrigger){
             randomOrNextScene(currentScene);
+        } else{
+            this.scene = currentScene;
         }
     }
 
@@ -184,5 +187,9 @@ public class Story {
 
     public void setRestart(boolean restart) {
         isRestart = restart;
+    }
+
+    public void setEventTrigger(boolean eventTrigger) {
+        this.eventTrigger = eventTrigger;
     }
 }

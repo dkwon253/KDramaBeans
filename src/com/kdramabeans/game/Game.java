@@ -1,6 +1,8 @@
 package com.kdramabeans.game;
 
 import java.util.Scanner;
+import java.util.*;
+
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,8 +14,10 @@ public class Game {
     private Player player = new Player();
     private Story story = new Story();
     private Item item = new Item();
+    private BGM music = new BGM();
     boolean enteredQuit = false;
     boolean enteredHelp = false;
+    private List<String> eventItems = Arrays.asList("wallet", "watch", "business card");
 
     /*
         ctor
@@ -27,6 +31,7 @@ public class Game {
 
     //this method keeps the user in a loop -- will keep prompting them until they enter "quit"
     public void start() {
+        music.playSong();
         while (!enteredQuit) {
             if (enteredHelp) {
                 enteredHelp = false;
@@ -39,8 +44,17 @@ public class Game {
                 player.printGrabbedItems();
                 story.printItems();
             }
+            if(hasEventItem()){
+                story.setEventTrigger(true);
+            }
             promptUser();
         }
+        music.stopSong();
+    }
+
+    //check if the player's grabbed items has the event trigger items.
+    private boolean hasEventItem() {
+        return !Collections.disjoint(player.getGrabbedItems(), eventItems);
     }
 
     //prompts the user to enter a command and/or noun, and captures the input to determine next move
@@ -85,10 +99,14 @@ public class Game {
                     System.out.println("You cannot examine that.\n");
                 }
                 break;
+            case "drop":
+                player.dropItem(input[1]);
+                break;
             case "grab":
                 if (story.hasItem(input[1]) && !player.hasGrabbedItem(input[1])) {
-                    player.grabItem(input[1]);
-                    story.setOptions(input[1]);
+                    if(player.grabItem(input[1])) {
+                        story.setOptions(input[1]);
+                    }
                 } else {
                     System.out.println("You cannot grab that.\n");
                 }
