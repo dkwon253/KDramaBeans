@@ -11,6 +11,7 @@ public class Game {
     private Player player = new Player();
     private Story story = new Story();
     private Item item = new Item();
+    private BGM music = new BGM();
     boolean enteredQuit = false;
     boolean enteredHelp = false;
 
@@ -25,6 +26,7 @@ public class Game {
 
     //this method keeps the user in a loop -- will keep prompting them until they enter "quit"
     public void start() {
+        music.playSong();
         while (!enteredQuit) {
             if (enteredHelp) {
                 enteredHelp = false;
@@ -39,6 +41,7 @@ public class Game {
             }
             promptUser();
         }
+        music.stopSong();
     }
 
     //prompts the user to enter a command and/or noun, and captures the input to determine next move
@@ -83,10 +86,14 @@ public class Game {
                     System.out.println("You cannot examine that.");
                 }
                 break;
+            case "drop":
+                player.dropItem(input[1]);
+                break;
             case "grab":
                 if (story.hasItem(input[1]) && !player.hasGrabbedItem(input[1])) {
-                    player.grabItem(input[1]);
-                    story.setOptions(input[1]);
+                    if(player.grabItem(input[1])) {
+                        story.setOptions(input[1]);
+                    }
                 } else {
                     System.out.println("You cannot grab that.");
                 }
