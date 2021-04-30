@@ -16,18 +16,20 @@ public class BGM {
     }
 
     public void playSong() {
-        clip.setFramePosition(0);
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public void stopSong(){
+    public void pauseSong(){
         clip.stop();
-        clip.close();
+    }
+
+    public boolean isPlaying(){
+        return clip.isRunning();
     }
 
     public void changeSong(String url){
-        stopSong();
+        pauseSong();
         try{
             createClip(url);
         }catch (Exception e){

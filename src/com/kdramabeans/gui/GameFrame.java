@@ -22,8 +22,8 @@ public class GameFrame {
     private JFrame window;
     private JPanel titleNamePanel, buttonPanel, mainTextPanel, generalButtonPanel;
     private JLabel titleNameLabel, lblGif;
-    private JButton startButton, nextButton, enterButton, restartButton, quitButton, helpButton;
-    private JTextArea mainTextArea, statusArea;
+    private JButton startButton, nextButton, enterButton, restartButton, quitButton, helpButton, musicButton;
+    private JTextArea mainTextArea, statusArea, userPrompt;
     private JTextField mainTextField;
     private Container container;
     private static final Font titleFont = new Font("Times New Roman", Font.BOLD, 30);
@@ -56,7 +56,7 @@ public class GameFrame {
 
         // start button setup - should link to the start of the game
         buttonPanel.setBounds(300, 400, 200, 100);
-        buttonPanel.setBackground(Color.blue);
+        buttonPanel.setBackground(Color.black);
         startButton.setBackground(Color.white);
         startButton.setForeground(Color.black);
         startButton.setFont(normalFont);
@@ -79,13 +79,13 @@ public class GameFrame {
 
         // sets up the panel
         mainTextPanel = new JPanel();
-        mainTextPanel.setBounds(100, 50, 600, 350);
-        mainTextPanel.setBackground(Color.blue);
+        mainTextPanel.setBounds(100, 50, 600, 450);
+        mainTextPanel.setBackground(Color.black);
 
         // sets up the textArea
         mainTextArea = new JTextArea();
         mainTextArea.setText(printStatus());
-        mainTextArea.setBounds(100, 50, 600, 350);
+        mainTextArea.setBounds(100, 50, 600, 450);
         mainTextArea.setBackground(Color.black);
         mainTextArea.setForeground(Color.white);
         mainTextArea.setFont(normalFont);
@@ -93,7 +93,7 @@ public class GameFrame {
 
         // enter button
         enterButton = new JButton("Enter");
-        buttonPanel.setBounds(550, 350, 150, 100);
+        buttonPanel.setBounds(550, 500, 150, 100);
         enterButton.setBackground(Color.black);
         enterButton.setForeground(Color.black);
         enterButton.setFont(normalFont);
@@ -105,15 +105,25 @@ public class GameFrame {
 
         // sets up the statusArea
         statusArea = new JTextArea();
-        statusArea.setBounds(100, 475, 600, 250);
+        statusArea.setBounds(100, 350, 600, 300);
         statusArea.setBackground(Color.black);
         statusArea.setForeground(Color.white);
         statusArea.setFont(normalFont);
         statusArea.setLineWrap(true);
 
+
+        //set up userPrompt label
+        userPrompt = new JTextArea();
+        userPrompt.setText("Type your command here:");
+        userPrompt.setBounds(100, 500, 450, 25);
+        userPrompt.setBackground(Color.black);
+        userPrompt.setForeground(Color.white);
+        userPrompt.setFont(normalFont);
+
         // set up textField for userInput
         mainTextField = new JTextField();
-        mainTextField.setBounds(100, 350, 450, 100);
+        mainTextField.setText("");
+        mainTextField.setBounds(100, 525, 450, 75);
         mainTextField.setBackground(Color.black);
         mainTextField.setForeground(Color.white);
         mainTextField.setFont(normalFont);
@@ -121,6 +131,7 @@ public class GameFrame {
 
         mainTextPanel.add(mainTextArea);
         mainTextPanel.add(statusArea);
+        container.add(userPrompt);
         container.add(mainTextField);
         container.add(mainTextPanel);
     }
@@ -152,32 +163,19 @@ public class GameFrame {
         quitButton = new JButton("Quit");
         restartButton = new JButton("Restart");
         helpButton = new JButton("Help");
+        musicButton = new JButton("Play/Pause");
 
-        generalButtonPanel.setBounds(100, 500, 600, 100);
+        generalButtonPanel.setBounds(100, 600, 600, 100);
+        generalButtonPanel.add(musicButton);
         generalButtonPanel.add(quitButton);
         generalButtonPanel.add(helpButton);
         generalButtonPanel.add(restartButton);
+        musicButton.addActionListener(textHandler);
         quitButton.addActionListener(textHandler);
         helpButton.addActionListener(textHandler);
         restartButton.addActionListener(textHandler);
         container.add(generalButtonPanel);
     }
-
-    public class TitleScreenHandler implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-//            music.playSong();
-            displayGif();
-        }
-    }
-
-    public class GifScreenHandler implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            createGameScreen();
-        }
-    }
-
 
 
     public class TextFieldHandler implements KeyListener, ActionListener {
@@ -215,13 +213,23 @@ public class GameFrame {
                 mainTextArea.setText(printStatus());
                 statusArea.setText("");
             } else if (e.getSource() == helpButton) {
-                System.out.println("These are your commands:\n" +
-                        "EXAMINE + GRAB + CHOOSE + QUIT + RESTART + DROP\n");
+                statusArea.setText("These are your commands:\n" +
+                        "EXAMINE [Item] - to get the item description.\n" +
+                        "GRAB [Item] - to add item to your inventory.\n" +
+                        "CHOOSE [1/2/3] - select your option to go to next scene.\n" +
+                        "DROP [Item] - to drop item from your inventory.\n" +
+                        "USE [Item] - to use item in a scene.\n" );
             } else if (e.getSource() == nextButton) {
                 createGameScreen();
             } else if (e.getSource() == startButton) {
-//                music.playSong();
+                music.playSong();
                 displayGif();
+            } else if (e.getSource() == musicButton) {
+                if(music.isPlaying()){
+                    music.pauseSong();
+                }else{
+                    music.playSong();
+                }
             }
             else {
                 System.out.println("You have not selected a button.");

@@ -64,7 +64,6 @@ public class Game {
             }
             promptUser();
         }
-        music.stopSong();
     }
 
     //check if the player's grabbed items has the event trigger items.
