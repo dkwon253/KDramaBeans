@@ -41,10 +41,10 @@ public class Item {
      */
 
     // function to grab item description
-    public void getItemDescription(String itemName) {
+    public String getItemDescription(String itemName) {
         JSONObject itemObj = (JSONObject) data.get(itemName);
         String itemD = (String) itemObj.get("description");
-        System.out.println(StringUtils.capitalize(itemName) + ": " + itemD);
+        return StringUtils.capitalize(itemName) + ": " + itemD;
     }
 
     /*

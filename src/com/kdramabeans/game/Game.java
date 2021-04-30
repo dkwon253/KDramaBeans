@@ -37,19 +37,20 @@ public class Game {
 
     //this method keeps the user in a loop -- will keep prompting them until they enter "quit"
     public void start() {
-        music.playSong();
+//        music.playSong();
         while (!enteredQuit) {
             if (enteredHelp) {
                 enteredHelp = false;
             } else {
                 if (story.isRestart()) {
                     player.clearItems();
+                    player.clearEvidence();
                     story.setRestart(false);
                 }
-                story.printStory();
-                player.printGrabbedItems();
-                player.printEvidence();
-                story.printItems();
+                System.out.println(story.printStory());
+                System.out.println(player.printGrabbedItems());
+                System.out.println(player.printEvidence());
+                System.out.println(story.printItems());
             }
             if(hasEventItem()){
                 story.setEventTrigger(true);
@@ -67,7 +68,7 @@ public class Game {
     //prompts the user to enter a command and/or noun, and captures the input to determine next move
     private void promptUser() {
         if (player.getGrabbedItems().size() > 0) {
-            story.printOptions();
+            System.out.println(story.printOptions());
         }
         try {
             String[] input = StringUtils.split(scanner.nextLine().toLowerCase().trim(), " ", 2);
@@ -82,6 +83,7 @@ public class Game {
                     System.out.println("Restarting...");
                     story.restartGame();
                     player.clearItems();
+                    player.clearEvidence();
                     break;
                 case "help":
                     System.out.println("These are your commands:\n" +
@@ -89,7 +91,7 @@ public class Game {
                     enteredHelp = true;
                     break;
                 default:
-                    executeCommand(input);
+                    System.out.println(executeCommand(input));;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Error: you didn't enter your move correctly");
@@ -97,28 +99,59 @@ public class Game {
 
     }
 
+//    private String guiPrompt(String textField) {
+////        if (player.getGrabbedItems().size() > 0) {
+////            System.out.println(story.printOptions());
+////        }TODO: add printOptions in GUI
+//
+//        try {
+//            String[] input = StringUtils.split(textField.toLowerCase().trim(), " ", 2);
+//            //System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+//
+//            switch (input[0]) {
+//                case "quit":
+//                    System.exit(0);
+//                    break;
+//                case "restart":
+//                    story.restartGame();
+//                    player.clearItems();
+//                    return "Restarting...";
+//                    break;
+//                case "help":
+//                    enteredHelp = true;
+//                    return "These are your commands:\n" +
+//                            "EXAMINE + GRAB + CHOOSE + QUIT + RESTART\n";
+//                    break;
+//                default:
+//                    return executeCommand(input);
+//            }
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//            return "Error: you didn't enter your move correctly";
+//        }
+//
+//    }
+
     // function that reads user's input and executes based on command
-    private void executeCommand(String[] input) {
+    public String executeCommand(String[] input) {
+
         switch (input[0]) {
             case "examine":
                 if (story.hasItem(input[1]) || player.hasGrabbedItem(input[1])) {
-                    item.getItemDescription(input[1]);
+                    return item.getItemDescription(input[1]);
                 } else {
-                    System.out.println("You cannot examine that.\n");
+                    return "You cannot examine that.\n";
                 }
-                break;
             case "drop":
-                player.dropItem(input[1]);
-                break;
+                return player.dropItem(input[1]);
             case "grab":
                 if (story.hasItem(input[1]) && !player.hasGrabbedItem(input[1])) {
                     if (player.grabItem(input[1])) {
                         story.setOptions(input[1]);
+                        return "You have grabbed " + input[1];
                     }
                 } else {
-                    System.out.println("You cannot grab that.\n");
+                    return "You cannot grab that.\n";
                 }
-                break;
             case "choose":
                 if (story.getOptions().containsKey(input[1])) {
                     story.setCurrentOption(input[1]);
@@ -126,24 +159,21 @@ public class Game {
                     if (story.isAtEnd()) {
                         music.changeSong(new File("..KDramaBeans/songs/sad.wav").toURI().toString());
                     }
+                    return "You chose option : " + input[1];
                 } else {
-                    System.out.println("Not an option\n");
+                   return "Not an option\n";
                 }
-                break;
             case "use":
                 String evidence = evidenceMap.get(input[1]);
                 System.out.println(evidence);
                 if (player.hasGrabbedItem(input[1]) && story.hasHidden(evidence)){
-                    //TODO: do something here
                     player.addEvidence(evidence);
-                    System.out.println("You have used : " + input[1] + ", and you collected : " + evidence);
+                    return "You have used : " + input[1] + ", and you collected : " + evidence;
                 } else{
-                    System.out.println("You don't have this item in your inventory or your item does not work here");
+                    return "You don't have this item in your inventory or your item does not work here";
                 }
-                break;
             default:
-                System.out.println("Not a command\n");
+                return "Not a command\n";
         }
     }
-
 }
