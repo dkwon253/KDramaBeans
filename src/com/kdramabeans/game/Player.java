@@ -44,22 +44,22 @@ public class Player {
     }
 
     //deletes an item from user's inventory, if it's there
-    public void dropItem(String item){
+    public String dropItem(String item){
         if(hasGrabbedItem(item)){
             grabbedItems.remove(item);
-            System.out.println("You have dropped: " + item);
+            return "You have dropped: " + item;
         }else{
-            System.out.println("You don't have one to drop.");
+            return "You don't have one to drop.";
         }
     }
 
     // dynamically prints items in your inventory when player chooses to grab from the scene
-    public void printGrabbedItems() {
-        System.out.println("Items in your inventory: " + grabbedItems);
+    public String printGrabbedItems() {
+        return "Items in your inventory: " + grabbedItems;
     }
 
-    public void printEvidence() {
-        System.out.println("You have collected: " + evidenceList);
+    public String printEvidence() {
+        return "You have collected: " + evidenceList;
     }
 
     //check if inventory contains the grabbed item

@@ -99,7 +99,7 @@ public class Story {
     }
 
     // restarts the game - resets scene back to intro and clears all options and items
-    void restartGame() {
+    public void restartGame() {
         this.scene = (JSONObject) data.get("intro");
         sceneItems.clear();
         setSceneItems();
@@ -164,29 +164,35 @@ public class Story {
     }
 
     // prints items for the currentScene
-    public void printItems() {
+    public String printItems() {
+        String result = "";
         if (!getEnding()) {
-            System.out.println("\nHere are the items you see: ");
-            sceneItems.forEach(item -> System.out.println(item.getName()));
+            result += "\nHere are the items you see: ";
+            for(int index = 0; index < sceneItems.size(); index++){
+                result += ("\n" + sceneItems.get(index).getName());
+            }
         }
+        return result;
     }
 
     // prints the story description
-    public void printStory() {
-        System.out.println("SCENE: \n" + getDescription() + "\n");
+    public String printStory() {
+        return "SCENE: \n" + getDescription() + "\n";
     }
 
     // iterates over story.json and depending on the item picked, will give you certain options
-    public void printOptions() {
+    public String printOptions() {
+        String result = "";
         if (options.size() > 0) {
             Iterator<Map.Entry<String, Map>> itr1 = options.entrySet().iterator();
-            System.out.println("\nHere are your options: ");
+            result += "\nHere are your options: ";
             while (itr1.hasNext()) {
                 Map.Entry<String, Map> pair = itr1.next();
                 JSONObject msg = (JSONObject) pair.getValue();
-                System.out.println(pair.getKey() + " : " + msg.get("description"));
+                result += ("\n" + pair.getKey() + " : " + msg.get("description"));
             }
         }
+        return result;
     }
 
     /*
