@@ -26,6 +26,15 @@ public class BGM {
         clip.close();
     }
 
+    public void changeSong(String url){
+        stopSong();
+        try{
+            createClip(url);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void createClip(String url) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
         clip = AudioSystem.getClip();
         clip.open(createAudioStream(url));
