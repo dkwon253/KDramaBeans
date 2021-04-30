@@ -8,6 +8,7 @@ public class Player {
       FIELDS
      */
     private List<String> grabbedItems = new ArrayList<>(); //player's inventory
+    private List<String> evidenceList = new ArrayList<>();
     private int max_inventory = 3; // default is 3
 
     /*
@@ -38,6 +39,10 @@ public class Player {
         return canGrab;
     }
 
+    public void addEvidence(String evidence) {
+        evidenceList.add(evidence);
+    }
+
     //deletes an item from user's inventory, if it's there
     public void dropItem(String item){
         if(hasGrabbedItem(item)){
@@ -53,6 +58,10 @@ public class Player {
         System.out.println("Items in your inventory: " + grabbedItems);
     }
 
+    public void printEvidence() {
+        System.out.println("You have collected: " + evidenceList);
+    }
+
     //check if inventory contains the grabbed item
     public boolean hasGrabbedItem(String item) {
         return grabbedItems.contains(item);
@@ -63,10 +72,19 @@ public class Player {
         grabbedItems.clear();
     }
 
+    //clears evidence in evidence list
+    public void clearEvidence() {
+        evidenceList.clear();
+    }
+
     /*
       GETTER
      */
     public List<String> getGrabbedItems() {
         return grabbedItems;
+    }
+
+    public List<String> getEvidenceList() {
+        return evidenceList;
     }
 }

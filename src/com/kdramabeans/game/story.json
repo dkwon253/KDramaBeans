@@ -2,60 +2,56 @@
   "intro": {
     "description": "This story is about a man seeking revenge for the murder of his father. Your name is Park Ji Woo and you have become a successful entrepreneur in the states. You come back to South Korea under the alias of Daniel Park and your goal is to destroy X Company.",
     "ending": false,
-    "items": ["passport", "wallet", "luggage"]
+    "items": ["passport", "wallet", "luggage"],
+    "hidden": []
   },
   "scene1": {
     "description": "Park Ji Woo's father, Park Ji Sung is driving his boss, Lee Jin Wook to work. He is suddenly asked to pull over as his boss receives an urgent phone call. His boss looks frantic.",
     "ending": false,
-    "items": ["voice recorder", "phone", "sun glasses"]
+    "items": ["voice recorder", "phone", "sun glasses"],
+    "hidden": []
   },
   "scene2": {
     "description": "The next day, your father leaves work to pick you up from school. Another car crashed into your dad's car, right in the front of the school gate. You come out of school only to find your dad is dead, and no other vehicle in sight. The only thing left besides your dad's body is his favorite watch and a picture of you two. Today, you became an orphan, you have no other family members.",
     "ending": false,
-    "items": ["watch", "will", "picture"]
+    "items": ["watch", "will", "picture"],
+    "hidden": ["evidence 1"]
   },
   "scene3": {
     "description": "You have been adopted by an American family and moved to New York. You attend and graduate at the top of your class from Yale University. You go on to become a successful entrepreneur and are famous all throughout the world. Little do people know, your only goal in life is to get back at the person who murdered your father.",
     "ending": false,
-    "items": ["ticket", "business card"]
+    "items": ["ticket", "business card"],
+    "hidden": ["evidence 2"]
   },
   "scene4": {
     "description": "You have done your research about X Company, and gathered leads on how to take the company down. You fly to Korea with the alias of Daniel Park.",
     "ending": false,
-    "items": ["coffee", "tea", "beer"]
+    "items": ["coffee", "tea", "beer"],
+    "hidden": []
   },
   "scene5": {
     "description": "You meet the daughter, Lee Ji Eun. She is caught off guard by your elegance and immediately starts a conversation with you.",
     "ending": false,
-    "items": ["window seat", "the booth"]
+    "items": ["window seat", "the booth"],
+    "hidden": ["evidence 3"]
   },
   "scene6": {
     "description": "You meet the CEO of Company X, and inform him your company would like to help promote the sales of RDX-90 in the United States.",
     "ending": false,
-    "items": ["green tea", "solomon's tea"]
+    "items": ["green tea", "solomon's tea"],
+    "hidden": ["evidence 5"]
   },
   "scene7": {
     "description": "You meet a board member of Company X, and he was quite happy about RDX-90 possibly going on sale in the United States",
     "ending": false,
     "items": ["ipa", "truly"],
-    "option": {
-      "1": {
-        "description": "Talk about safety issue of RDX-90",
-        "nextScene": "scene8",
-        "item": "company shares",
-        "itemDescription": "The board member expresses concerns of the RDX-90 launch after your conversation. You offer to buy some of the company shares from him to mitigate the loss. He agrees to give you half of his shares."
-      },
-      "2": {
-        "description": "Show interest in buying some of Company X's shares",
-        "nextScene": "scene8",
-        "itemDescription": "He offers you an outrageous price of selling his shares. You reject his offer."
-      }
-    }
+    "hidden": ["evidence 4"]
   },
   "scene8": {
     "description": "You've collected enough information about the safety concerns of RDX-90 along with the plagiarized clinical trials. You meet an American reporter in a cafe shop to transfer all the information you have on Company X. As soon as you are about to give the report, Lee Ji Eun, who has been tailing you, interrupts your conversation.",
     "ending": false,
-    "items": ["kimchi", "soju"]
+    "items": ["kimchi", "soju"],
+    "hidden": []
   },
   "result1": {
     "description": "You take down the company, you reveal your identity to Chairman Lee who is shocked that you have come this far. He asks for forgiveness and for you to spare his life. He is sentenced to 15 years in jail for corruption and murder for your father's death.",

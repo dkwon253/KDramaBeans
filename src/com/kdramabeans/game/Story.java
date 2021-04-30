@@ -16,6 +16,7 @@ public class Story {
     private Map<String, Map> options = new HashMap<>();
     private String currentOption;
     private List<Item> sceneItems = new ArrayList<>();
+    private List<String> hiddenItems = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private JSONObject randomEvent = new RandomEvents().getEvent();
     private boolean isRestart = false;
@@ -48,6 +49,8 @@ public class Story {
         resetOptions();
         sceneItems.clear();
         setSceneItems();
+        hiddenItems.clear();
+        setHiddenItems();
     }
 
     // sets the scene, it will check if the scene ends the game or not and display the description
@@ -100,6 +103,8 @@ public class Story {
         this.scene = (JSONObject) data.get("intro");
         sceneItems.clear();
         setSceneItems();
+        hiddenItems.clear();
+        setHiddenItems();
         resetOptions();
     }
 
@@ -125,11 +130,33 @@ public class Story {
         });
     }
 
+    private void setHiddenItems() {
+        List items = (List) scene.get("hidden");
+        items.forEach(item -> {
+            try {
+                hiddenItems.add(item.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     //check if current scene has the item by comparing to the name of each item
     public boolean hasItem(String itemName) {
         boolean result = false;
         for (int index = 0; index < sceneItems.size(); index++) {
             if (sceneItems.get(index).getName().equalsIgnoreCase(itemName)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    //check if current scene has hidden item
+    public boolean hasHidden(String itemName) {
+        boolean result = false;
+        for (int index = 0; index < hiddenItems.size(); index++) {
+            if (hiddenItems.get(index).equalsIgnoreCase(itemName)) {
                 result = true;
             }
         }

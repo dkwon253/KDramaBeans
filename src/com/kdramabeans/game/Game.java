@@ -18,7 +18,13 @@ public class Game {
     boolean enteredQuit = false;
     boolean enteredHelp = false;
     private List<String> eventItems = Arrays.asList("wallet", "watch", "business card");
-
+    private Map<String, String> evidenceMap = new HashMap<>(){{
+        put("watch", "evidence 1");
+        put("business card", "evidence 2");
+        put("rose", "evidence 3");
+        put("bitcoin", "evidence 4");
+        put("voice recorder", "evidence 5");
+    }};
     /*
         ctor
      */
@@ -42,6 +48,7 @@ public class Game {
                 }
                 story.printStory();
                 player.printGrabbedItems();
+                player.printEvidence();
                 story.printItems();
             }
             if(hasEventItem()){
@@ -121,6 +128,17 @@ public class Game {
                     }
                 } else {
                     System.out.println("Not an option\n");
+                }
+                break;
+            case "use":
+                String evidence = evidenceMap.get(input[1]);
+                System.out.println(evidence);
+                if (player.hasGrabbedItem(input[1]) && story.hasHidden(evidence)){
+                    //TODO: do something here
+                    player.addEvidence(evidence);
+                    System.out.println("You have used : " + input[1] + ", and you collected : " + evidence);
+                } else{
+                    System.out.println("You don't have this item in your inventory or your item does not work here");
                 }
                 break;
             default:
