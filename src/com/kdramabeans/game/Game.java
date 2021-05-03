@@ -46,7 +46,7 @@ public class Game {
 
     //this method keeps the user in a loop -- will keep prompting them until they enter "quit"
     public void start() {
-//        music.playSong();
+        music.playSong();
         while (!enteredQuit) {
             if (enteredHelp) {
                 enteredHelp = false;
@@ -105,37 +105,6 @@ public class Game {
 
     }
 
-//    private String guiPrompt(String textField) {
-////        if (player.getGrabbedItems().size() > 0) {
-////            System.out.println(story.printOptions());
-////        }TODO: add printOptions in GUI
-//
-//        try {
-//            String[] input = StringUtils.split(textField.toLowerCase().trim(), " ", 2);
-//            //System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-//
-//            switch (input[0]) {
-//                case "quit":
-//                    System.exit(0);
-//                    break;
-//                case "restart":
-//                    story.restartGame();
-//                    player.clearItems();
-//                    return "Restarting...";
-//                    break;
-//                case "help":
-//                    enteredHelp = true;
-//                    return "These are your commands:\n" +
-//                            "EXAMINE + GRAB + CHOOSE + QUIT + RESTART\n";
-//                    break;
-//                default:
-//                    return executeCommand(input);
-//            }
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//            return "Error: you didn't enter your move correctly";
-//        }
-//
-//    }
 
     // function that reads user's input and executes based on command
     public String executeCommand(String[] input, boolean isGUI) {
@@ -163,9 +132,9 @@ public class Game {
                 if (gameStory.getOptions().containsKey(input[1])) {
                     gameStory.setCurrentOption(input[1]);
                     gameStory.nextScene(isGUI);
-                    if (gameStory.isAtEnd()) {
-                        music.changeSong(new File("songs/sad.wav").toURI().toString());
-                    }
+//                    if (gameStory.isAtEnd()) {
+//                        music.changeSong(new File("resources/sad.wav").toURI().toString());
+//                    }
                     return "You chose option : " + input[1];
                 } else {
                    return "Not an option\n";
