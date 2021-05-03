@@ -2,22 +2,17 @@ package com.kdramabeans.gui;
 
 import com.kdramabeans.game.*;
 import org.apache.commons.lang3.StringUtils;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.util.Arrays;
 
 public class GameFrame {
     private Player player = new Player();
     private Story story = new Story();
-    private Game game = new Game(story, player);
+    private Game game = new Game(story, player, true);
     private BGM music = new BGM();
     private JFrame window;
     private JPanel titleNamePanel, buttonPanel, mainTextPanel, generalButtonPanel;
@@ -42,21 +37,22 @@ public class GameFrame {
         // JFrame setup
         window.setSize(800, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().setBackground(Color.red);
+        window.getContentPane().setBackground(Color.WHITE);
         window.setLayout(null);
+        window.setResizable(false);
         window.setTitle("KDramaBeans Game");
         container = window.getContentPane();
 
         // Panel Title (can be used to place all the text and scenario we want to use)
         titleNamePanel.setBounds(100, 100, 600, 150);
-        titleNamePanel.setBackground(Color.blue);
+        titleNamePanel.setBackground(Color.white);
         titleNameLabel = new JLabel("Welcome to KDramaBeans Game!");
-        titleNameLabel.setForeground(Color.white);
+        titleNameLabel.setForeground(Color.black);
         titleNameLabel.setFont(titleFont);
 
         // start button setup - should link to the start of the game
         buttonPanel.setBounds(300, 400, 200, 100);
-        buttonPanel.setBackground(Color.black);
+        buttonPanel.setBackground(Color.white);
         startButton.setBackground(Color.white);
         startButton.setForeground(Color.black);
         startButton.setFont(normalFont);
@@ -80,21 +76,21 @@ public class GameFrame {
         // sets up the panel
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(100, 50, 600, 450);
-        mainTextPanel.setBackground(Color.black);
+        mainTextPanel.setBackground(Color.white);
 
         // sets up the textArea
         mainTextArea = new JTextArea();
         mainTextArea.setText(printStatus());
         mainTextArea.setBounds(100, 50, 600, 450);
-        mainTextArea.setBackground(Color.black);
-        mainTextArea.setForeground(Color.white);
+        mainTextArea.setBackground(Color.white);
+        mainTextArea.setForeground(Color.black);
         mainTextArea.setFont(normalFont);
         mainTextArea.setLineWrap(true);
 
         // enter button
         enterButton = new JButton("Enter");
-        buttonPanel.setBounds(550, 500, 150, 100);
-        enterButton.setBackground(Color.black);
+        buttonPanel.setBounds(550, 537, 150, 50);
+        enterButton.setBackground(Color.white);
         enterButton.setForeground(Color.black);
         enterButton.setFont(normalFont);
         enterButton.addActionListener(textHandler);
@@ -106,8 +102,8 @@ public class GameFrame {
         // sets up the statusArea
         statusArea = new JTextArea();
         statusArea.setBounds(100, 350, 600, 300);
-        statusArea.setBackground(Color.black);
-        statusArea.setForeground(Color.white);
+        statusArea.setBackground(Color.white);
+        statusArea.setForeground(Color.black);
         statusArea.setFont(normalFont);
         statusArea.setLineWrap(true);
 
@@ -116,16 +112,16 @@ public class GameFrame {
         userPrompt = new JTextArea();
         userPrompt.setText("Type your command here:");
         userPrompt.setBounds(100, 500, 450, 25);
-        userPrompt.setBackground(Color.black);
-        userPrompt.setForeground(Color.white);
+        userPrompt.setBackground(Color.white);
+        userPrompt.setForeground(Color.black);
         userPrompt.setFont(normalFont);
 
         // set up textField for userInput
         mainTextField = new JTextField();
         mainTextField.setText("");
         mainTextField.setBounds(100, 525, 450, 75);
-        mainTextField.setBackground(Color.black);
-        mainTextField.setForeground(Color.white);
+        mainTextField.setBackground(Color.white);
+        mainTextField.setForeground(Color.black);
         mainTextField.setFont(normalFont);
         mainTextField.addKeyListener(textHandler);
 
@@ -249,7 +245,7 @@ public class GameFrame {
             for (int index = 0; index < input.length; index++) {
                 System.out.println(input[index]);
             }
-            statusArea.setText(game.executeCommand(input));
+            statusArea.setText(game.executeCommand(input, true));
             mainTextArea.setText(printStatus());
             mainTextField.setText("");
         } catch (ArrayIndexOutOfBoundsException exception) {

@@ -25,6 +25,7 @@ public class Game {
         put("bitcoin", "evidence 4");
         put("voice recorder", "evidence 5");
     }};
+    private boolean isGUI = false;
     /*
         ctor
      */
@@ -33,9 +34,10 @@ public class Game {
         this.gamePlayer = new Player();
     }
 
-    public Game(Story guiStory, Player guiPlayer) throws Exception {
+    public Game(Story guiStory, Player guiPlayer, boolean isGUI) throws Exception {
         this.gameStory = guiStory;
         this.gamePlayer = guiPlayer;
+        this.isGUI = isGUI;
     }
 
     /*
@@ -95,7 +97,7 @@ public class Game {
                     enteredHelp = true;
                     break;
                 default:
-                    System.out.println(executeCommand(input));;
+                    System.out.println(executeCommand(input, false));;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Error: you didn't enter your move correctly");
@@ -136,7 +138,7 @@ public class Game {
 //    }
 
     // function that reads user's input and executes based on command
-    public String executeCommand(String[] input) {
+    public String executeCommand(String[] input, boolean isGUI) {
         switch (input[0]) {
             case "examine":
                 if (gameStory.hasItem(input[1]) || gamePlayer.hasGrabbedItem(input[1])) {
@@ -160,9 +162,9 @@ public class Game {
             case "choose":
                 if (gameStory.getOptions().containsKey(input[1])) {
                     gameStory.setCurrentOption(input[1]);
-                    gameStory.nextScene();
+                    gameStory.nextScene(isGUI);
                     if (gameStory.isAtEnd()) {
-                        music.changeSong(new File("..KDramaBeans/songs/sad.wav").toURI().toString());
+                        music.changeSong(new File("songs/sad.wav").toURI().toString());
                     }
                     return "You chose option : " + input[1];
                 } else {

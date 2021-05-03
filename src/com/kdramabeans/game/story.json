@@ -54,27 +54,39 @@
     "hidden": []
   },
   "result1": {
-    "description": "You take down the company, you reveal your identity to Chairman Lee who is shocked that you have come this far. He asks for forgiveness and for you to spare his life. He is sentenced to 15 years in jail for corruption and murder for your father's death.",
-    "ending": true
+    "description": "Congratulations, you have reached your goal of life! You take down the company, you reveal your identity to Chairman Lee who is shocked that you have come this far. He asks for forgiveness and for you to spare his life. He is sentenced to 15 years in jail for corruption and murder for your father's death.",
+    "ending": true,
+    "items": [],
+    "hidden": []
   },
   "result2": {
     "description": "You develop feelings for Lee Ji Eun and your relationship takes off. You reveal your identity to her and she accepts you for who you are and what you have been through. You still reveal the corrupt deeds of Company X and the Chairman goes to jail. You take over as the CEO and reform the company and it becomes a global brand after the successful promotion of RDX-90.",
-    "ending": true
+    "ending": true,
+    "items": [],
+    "hidden": []
   },
   "candyCrush": {
     "description": "You ran out of time and couldn't beat level 100. You open the window a little bit to take out your frustration. The chairman being frantic feels like you were eavesdropping and gets suspicious.",
-    "ending": true
+    "ending": true,
+    "items": [],
+    "hidden": []
   },
   "mournScene": {
     "description": "Your perform your father's funeral. Few guests arrive, but nobody from Company X gives their condolences.",
-    "ending": true
+    "ending": true,
+    "items": [],
+    "hidden": []
   },
   "olympicScene": {
     "description": "Korea takes 1st place in all competitions! All the males are exempt from their military service.",
-    "ending": true
+    "ending": true,
+    "items": [],
+    "hidden": []
   },
   "ceoScene": {
     "description": "You notice a lot of the information presented doesn't make any sense. You see that this document can be a liability to the company and its RDX-90 product promotion.",
-    "ending": true
+    "ending": true,
+    "items": [],
+    "hidden": []
   }
 }
