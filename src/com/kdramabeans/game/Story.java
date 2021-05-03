@@ -3,6 +3,7 @@ package com.kdramabeans.game;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -44,8 +45,8 @@ public class Story {
      */
 
     //brings user to the next scene by resetting the scene, the items in the scene, and clearing their options
-    public void nextScene() {
-        setScene();
+    public void nextScene(boolean isGUI) {
+        setScene(isGUI);
         resetOptions();
         sceneItems.clear();
         setSceneItems();
@@ -54,22 +55,32 @@ public class Story {
     }
 
     // sets the scene, it will check if the scene ends the game or not and display the description
-    private void setScene() {
+    private void setScene(boolean isGUI) {
         JSONObject newOption = (JSONObject) options.get(currentOption);
         String nextScene = (String) newOption.get("nextScene");
         JSONObject currentScene = (JSONObject) data.get(nextScene);
         if ((boolean) currentScene.get("ending")) {
             isAtEnd = true;
-            runEndingScene(currentScene);
-        } else if (eventTrigger){
+            if (isGUI) {
+                runGUIEnding(currentScene);
+            } else {
+                runEndingScene(currentScene);
+            }
+        } else if (eventTrigger) {
             randomOrNextScene(currentScene);
-        } else{
+        } else {
             this.scene = currentScene;
         }
     }
 
+    private void runGUIEnding(JSONObject currentScene) {
+        String ending = "\nThis is the end of the game, if you want to start again, click the restart button.";
+        currentScene.put("description", currentScene.get("description") + ending);
+        this.scene = currentScene;
+    }
+
     //if the user has hit a "dead end" they have the option to restart the game
-    private void runEndingScene(JSONObject currentScene){
+    private void runEndingScene(JSONObject currentScene) {
         String msg = (String) currentScene.get("description");
         System.out.println(msg);
         System.out.println("Do you want to play again? ");
@@ -88,7 +99,7 @@ public class Story {
     }
 
     //this will set either a "random" scene or user's choice of scene
-    private void randomOrNextScene(JSONObject currentScene){
+    private void randomOrNextScene(JSONObject currentScene) {
         Random rand = new Random();
         int n = rand.nextInt(10);
         if (n <= 2) {
@@ -120,6 +131,7 @@ public class Story {
 
     // pulls from items list in story.json and displays choices to the player
     private void setSceneItems() {
+
         List items = (List) scene.get("items");
         items.forEach(item -> {
             try {
@@ -128,9 +140,11 @@ public class Story {
                 e.printStackTrace();
             }
         });
+
     }
 
     private void setHiddenItems() {
+
         List items = (List) scene.get("hidden");
         items.forEach(item -> {
             try {
@@ -139,6 +153,7 @@ public class Story {
                 e.printStackTrace();
             }
         });
+
     }
 
     //check if current scene has the item by comparing to the name of each item
@@ -168,7 +183,7 @@ public class Story {
         String result = "";
         if (!getEnding()) {
             result += "\nHere are the items you see: ";
-            for(int index = 0; index < sceneItems.size(); index++){
+            for (int index = 0; index < sceneItems.size(); index++) {
                 result += ("\n" + sceneItems.get(index).getName());
             }
         }
