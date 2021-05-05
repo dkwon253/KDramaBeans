@@ -8,12 +8,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 public class GameFrame {
     private Player player = new Player();
     private Story story = new Story();
+    private Item item = new Item();
     private Game game = new Game(story, player, true);
     private BGM music = new BGM();
+    private Map<String, String> evidenceMap = new HashMap<>(){{
+        put("watch", "evidence 1");
+        put("business card", "evidence 2");
+        put("rose", "evidence 3");
+        put("bitcoin", "evidence 4");
+        put("voice recorder", "evidence 5");
+    }};
     private JFrame window;
     private JPanel titleNamePanel, buttonPanel, mainTextPanel, generalButtonPanel;
     private JLabel titleNameLabel, lblGif;
@@ -68,10 +84,9 @@ public class GameFrame {
 
     public void createGameScreen() {
         // disables to home page panel and will display panel below
+        buttonPanel.setVisible(false);
+
         titleNamePanel.setVisible(false);
-        buttonPanel.remove(nextButton);
-        buttonPanel.setVisible(true);
-        container.remove(lblGif);
 
         // sets up the panel
         mainTextPanel = new JPanel();
@@ -79,8 +94,7 @@ public class GameFrame {
         mainTextPanel.setBackground(Color.white);
 
         // sets up the textArea
-        mainTextArea = new JTextArea();
-        mainTextArea.setText(printStatus());
+        mainTextArea = new JTextArea(printStatus());
         mainTextArea.setBounds(100, 50, 600, 450);
         mainTextArea.setBackground(Color.white);
         mainTextArea.setForeground(Color.black);
@@ -106,7 +120,11 @@ public class GameFrame {
         statusArea.setForeground(Color.black);
         statusArea.setFont(normalFont);
         statusArea.setLineWrap(true);
-
+        statusArea.setText("These are your commands:\n" +
+                "EXAMINE [Item] - to get the item description.\n" +
+                "GRAB [Item] - to add item to your inventory.\n" +
+                "DROP [Item] - to drop item from your inventory.\n" +
+                "USE [Item] - to use item in a scene.\n" );
 
         //set up userPrompt label
         userPrompt = new JTextArea();
@@ -130,17 +148,21 @@ public class GameFrame {
         container.add(userPrompt);
         container.add(mainTextField);
         container.add(mainTextPanel);
+        buttonPanel.setVisible(true);
     }
 
     public void displayGif() {
         titleNamePanel.setVisible(false);
-        buttonPanel.remove(startButton);
 
-        //String path = "/Users/kathyle27/Documents/GitHub/KDramaBeans/images/koreanair.gif";
-        String path = "images/koreanair.gif";
-        Icon imgGif = new ImageIcon(path);
         lblGif = new JLabel();
-        lblGif.setIcon(imgGif);
+
+        try{
+            Icon imgGif = new ImageIcon(getClass().getResource("resources/images/random.jpg"));
+            lblGif.setIcon(imgGif);
+        }catch(NullPointerException e){
+            System.out.println("Can't Find Image");
+        }
+
         lblGif.setBounds(150, 150, 455, 170);
         container.add(lblGif);
 
@@ -198,40 +220,41 @@ public class GameFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == enterButton) {
-                playGame();
-            } else if (e.getActionCommand().equals("Quit")) {
-                System.exit(0);
-            } else if (e.getSource() == restartButton) {
-                System.out.println("Restarting...");
-                story.restartGame();
-                player.clearItems();
-                mainTextArea.setText(printStatus());
-                statusArea.setText("");
-            } else if (e.getSource() == helpButton) {
-                statusArea.setText("These are your commands:\n" +
+            if (e.getActionCommand().equals("Quit")) {
+            System.exit(0);
+        }
+            Map<Object, Runnable> allActions = new HashMap<>(){{
+                put(enterButton,()->playGame());
+                put(restartButton,()-> {
+                    System.out.println("Restarting...");
+                    story.restartGame();
+                    player.clearItems();
+                    mainTextArea.setText(printStatus());
+                    statusArea.setText("");
+                });
+                put(helpButton,()-> statusArea.setText("These are your commands:\n" +
                         "EXAMINE [Item] - to get the item description.\n" +
                         "GRAB [Item] - to add item to your inventory.\n" +
-                        "CHOOSE [1/2/3] - select your option to go to next scene.\n" +
                         "DROP [Item] - to drop item from your inventory.\n" +
-                        "USE [Item] - to use item in a scene.\n" );
-            } else if (e.getSource() == nextButton) {
-                createGameScreen();
-            } else if (e.getSource() == startButton) {
-                music.playSong();
-                displayGif();
-            } else if (e.getSource() == musicButton) {
-                if(music.isPlaying()){
-                    music.pauseSong();
-                }else{
+                        "USE [Item] - to use item in a scene.\n" ));
+                put(startButton,()-> {
+                    startButton.getParent().remove(startButton);
+                    createGameScreen();
                     music.playSong();
-                }
-            }
-            else {
-                System.out.println("You have not selected a button.");
-            }
+                });
+                put(musicButton,()-> {
+                    if(music.isPlaying()){
+                        music.pauseSong();
+                    }else{
+                        music.playSong();
+                    }
+                });
+                put(nextButton,()-> createGameScreen());
+            }};
+            allActions.getOrDefault(e.getSource(),()->System.out.println("You have not selected a button.")).run();
         }
     }
+
     private String printStatus(){
         String status = "";
         status += (story.printStory() + "\n" + player.printGrabbedItems() + "\n" + player.printEvidence() + "\n" + story.printItems() + "\n" + game.printOptions());
@@ -242,10 +265,72 @@ public class GameFrame {
         try {
             String[] input = StringUtils.split(mainTextField.getText().toLowerCase().trim(), " ", 2);
             System.out.println("THIS IS THE INPUT" + mainTextField.getText());
-            for (int index = 0; index < input.length; index++) {
-                System.out.println(input[index]);
+            for (String s : input) {
+                System.out.println(s);
             }
-            statusArea.setText(game.executeCommand(input, true));
+            final String[] Result = new String[1];
+            Map<String, Runnable> allActions = new HashMap<>();
+
+            ArrayList<Runnable> runners = new ArrayList<Runnable>(){{
+                add(() -> {
+                    if (story.hasItem(input[1]) || player.hasGrabbedItem(input[1])) {
+                        Result[0] = item.getItemDescription(input[1]);
+                    } else {
+                        Result[0] = "You cannot examine that.\n";
+                    }
+                });
+                add(() -> {
+                    if (story.hasItem(input[1]) && !player.hasGrabbedItem(input[1])) {
+                        if (player.grabItem(input[1])) {
+                            story.setOptions(input[1]);
+                            Result[0] = "You have grabbed " + input[1];
+                        } else {
+
+                            Result[0] = "You have too many items! Try dropping one if you really need to grab " + input[1];
+                        }
+                    } else {
+
+                        Result[0] = "You cannot grab that.\n";
+                    }
+                });
+                add(() -> {
+                    String evidence = evidenceMap.get(input[1]);
+                    if (player.hasGrabbedItem(input[1]) && story.hasHidden(evidence)) {
+                        player.addEvidence(evidence);
+                        player.dropItem(input[1]);
+                        Result[0] = "You have used : " + input[1] + ", and you collected : " + evidence;
+                    } else {
+                        Result[0] = "You don't have this item in your inventory or your item does not work here";
+                    }
+                });
+                add(() -> Result[0] = player.dropItem(input[1]));
+            }};
+            try{
+                InputStream in = getClass().getResourceAsStream("/resources/validVerbs.csv");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                final int[] counter = {0};
+                reader.lines().forEachOrdered(synonyms -> {
+                    String[] verbs = synonyms.split(",");
+                    for(String verb : verbs){
+                        allActions.put(verb,runners.get(counter[0]));
+                    }
+                    counter[0]++;
+                });
+            }catch(Exception except){
+                System.out.println(except);
+            }
+            allActions.getOrDefault(input[0],()->{
+                int answer = story.getOptions().values().stream().map(obj->obj.get("description").toString().toLowerCase()).collect(Collectors.toList()).indexOf(mainTextField.getText().toLowerCase().trim())+1;
+                if (answer!=0) {
+                    story.setCurrentOption(""+answer);
+                    story.nextScene(true);
+                    Result[0] =  "";
+                } else {
+                    Result[0] = "Not a command\n";
+                }
+            }).run();
+            statusArea.setText(Result[0]);
+
             mainTextArea.setText(printStatus());
             mainTextField.setText("");
         } catch (ArrayIndexOutOfBoundsException exception) {

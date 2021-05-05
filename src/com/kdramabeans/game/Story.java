@@ -158,24 +158,22 @@ public class Story {
 
     //check if current scene has the item by comparing to the name of each item
     public boolean hasItem(String itemName) {
-        boolean result = false;
-        for (int index = 0; index < sceneItems.size(); index++) {
-            if (sceneItems.get(index).getName().equalsIgnoreCase(itemName)) {
-                result = true;
+        for (Item sceneItem : sceneItems) {
+            if (sceneItem.getName().equalsIgnoreCase(itemName)) {
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
     //check if current scene has hidden item
     public boolean hasHidden(String itemName) {
-        boolean result = false;
-        for (int index = 0; index < hiddenItems.size(); index++) {
-            if (hiddenItems.get(index).equalsIgnoreCase(itemName)) {
-                result = true;
+        for (String hiddenItem : hiddenItems) {
+            if (hiddenItem.equalsIgnoreCase(itemName)) {
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
     // prints items for the currentScene
@@ -183,8 +181,8 @@ public class Story {
         String result = "";
         if (!getEnding()) {
             result += "\nHere are the items you see: ";
-            for (int index = 0; index < sceneItems.size(); index++) {
-                result += ("\n" + sceneItems.get(index).getName());
+            for (Item sceneItem : sceneItems) {
+                result += ("\n" + sceneItem.getName());
             }
         }
         return result;
