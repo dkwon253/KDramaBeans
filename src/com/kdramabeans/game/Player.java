@@ -9,7 +9,7 @@ public class Player {
      */
     private List<String> grabbedItems = new ArrayList<>(); //player's inventory
     private List<String> evidenceList = new ArrayList<>();
-    private int max_inventory = 3; // default is 3
+    private int max_inventory = 10; // default is 3
 
     /*
      CTOR

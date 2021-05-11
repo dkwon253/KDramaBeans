@@ -1,7 +1,9 @@
 package com.kdramabeans.game;
 
 import javax.sound.sampled.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 
@@ -9,10 +11,23 @@ public class BGM {
     /*
         FIELDS
      */
-    private Clip clip;// what allows us to actually play music
+    public Clip clip;// what allows us to actually play music
 
     public BGM() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        createClip("https://kathyle.dev/songs/goblin.wav");
+
+        Thread musicThread = new Thread(() -> {
+            try {
+                createClip("https://kathyle.dev/songs/goblin.wav");
+//                URL url = BGM.class.getClass().getResource("/resources/music/goblin.wav");
+//                AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
+//                clip = AudioSystem.getClip();
+//                clip.open(audioStream);
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        });
+        musicThread.start();
+
     }
 
     public void playSong() {
